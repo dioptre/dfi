@@ -1,15 +1,68 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
+
+      <div class="item item-divider">Preferences</div>
+
+      <ion-item class="item" href='#'>
+      Location
+      </ion-item>
+
+      <ion-item class="item" href='#'>
+      Radius
+      </ion-item>
+
+      <ion-item class="item" href='#'>
+      Age
+      </ion-item>
+
+      <ion-item class="item" href='#'>
+      Alert Frequency
+      </ion-item>
+
       <ion-item class="item-toggle">
-        Enable Friends
+        Discover
         <label class="toggle">
-          <input type="checkbox" ng-model="settings.enableFriends">
+          <input type="checkbox" ng-model="settings.discover">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
+
+      <div class="item item-divider">Alert Notification</div>
+
+      <ion-item class="item-toggle">
+        Alert: Direct Message
+        <label class="toggle">
+          <input type="checkbox" ng-model="settings.directMessage">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+
+      <ion-item class="item-toggle">
+        Alert New Events
+        <label class="toggle">
+          <input type="checkbox" ng-model="settings.newEvent">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+
+      <div class="item item-divider">Legals</div>
+
+      <ion-item class="item" href='#'>
+      Privacy Policy
+      </ion-item>
+
+      <ion-item class="item" href='#'>
+      Terms and Agreements
+      </ion-item>
+
     </ion-list>
   </ion-content>
+
 </ion-view>

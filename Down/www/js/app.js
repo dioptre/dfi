@@ -43,7 +43,7 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'DashCtrl'
+        controller: 'HomeCtrl'
       }
     }
   })

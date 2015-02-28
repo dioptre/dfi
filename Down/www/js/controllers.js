@@ -2,11 +2,12 @@ angular.module('downForIt.controllers', [])
 
 .controller('HomeCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, $cordovaOauth) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
   }
+   window.cauth = $cordovaOauth;
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {

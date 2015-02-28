@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
-angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services'])
+angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth'])
 
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {

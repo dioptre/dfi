@@ -5,8 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
-angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 
-  'ngStorage'])
+angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 'ngStorage', 'LocalForageModule'])
 
 .run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
@@ -156,11 +155,18 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     }
   })
 
+  .state('create-event', {
+    url: '/create',
+    templateUrl: 'templates/create-event.html',
+    controller: 'CreateCtrl'
+  })
+
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
+
 
   .state('logout', {
     url: '/logout',

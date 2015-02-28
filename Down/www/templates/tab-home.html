@@ -1,13 +1,9 @@
-<ion-view>
-  <ion-header-bar align-title="left" class="bar-positive">
-    <div class="buttons">
-      <button class="button" ng-click="doSomething()">Left Button</button>
-    </div>
-    <h1 class="title">Title!</h1>
-    <div class="buttons">
-      <button class="button">Right Button</button>
-    </div>
-  </ion-header-bar>
+<ion-view view-title="Events Feed">
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="newItem()">
+      New
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <div class="list card" ng-repeat="chat in chats">
       <div class="item item-avatar item-button-right">

@@ -32,8 +32,33 @@ angular.module('downForIt.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, TwitterLib) {
   $scope.chats = Chats.all();
+  $scope.message = {
+    text: ''
+  }
+  var options = {
+    url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
+    data: {
+      'screen_name': "aaronksaunders",
+      'count': "25"
+    }
+  };
+  TwitterLib.apiGetCall(options).then(function (_data) {
+    // alert("doStatus success");
+    $scope.items = _data;
+  }, function (_error) {
+    alert("doStatus error" + JSON.stringify(_error));
+  });
+
+  $scope.tweet = function() {
+    TwitterLib.tweet($scope.message.text).then(function (_data) {
+      alert("tweet success" + JSON.stringify(_data));
+    }, function (_error) {
+      alert("tweet error" + JSON.stringify(_error));
+    });
+  };
+
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
@@ -69,31 +94,93 @@ angular.module('downForIt.controllers', [])
 
 // })
 
-.controller('LoginCtrl', function($scope, Api, $state){
+.controller('LoginCtrl', function($scope, TwitterLib, $state){
 
   $scope.login = function(){
-    Api.init().then(function(response){
-      $scope.error = response;
+    TwitterLib.init().then(function (_data) {
+      //the whole data
+      alert(JSON.stringify(_data));
       $state.go('tab.home');
-    }, function(error){
-      $scope.error = error;
-      console.log(error);
+    }, function error(_error) {
+      alert(JSON.stringify(_error));
     });
   };
 
   $scope.logout = function(){
-    Api.logout();
+    TwitterLib.logOut();
   };
 
 })
 
-.controller('LogoutCtrl', function($scope, Api, $state){
+.controller('LogoutCtrl', function($scope, TwitterLib, $state){
 
-  Api.logout();
+  TwitterLib.logOut();
   $state.go('login');
 
 })
 
+.controller('CreateCtrl', function($scope, $ionicModal, $localForage) {
+    $scope.items = [];
+    $localForage.getItem('__TASKS__').then(function(tasks) {
+      if (tasks) {
+        $scope.items = tasks;
+      }
+    });
+    
+    // Initialize the dialog window
+    $ionicModal.fromTemplateUrl('create-events.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    }); 
+
+    $scope.showTaskPrompt = function() {
+      var newTask = {
+        title: '',
+        description: '',
+        isComplete: null
+      };  
+
+      $scope.newTask = newTask;
+      $scope.modal.show();
+    };
+
+    $scope.saveTask = function() {
+      $scope.items.push($scope.newTask);
+      $localForage.setItem('__TASKS__', $scope.items).then(function() {
+        $scope.modal.hide();
+      });
+    };
+
+    $scope.cancelTask = function() {
+      $scope.modal.hide();
+    };
+
+    $scope.completeItem = function(item) {
+      $scope.removeItem(item);
+    };
+
+    $scope.ignoreItem = function(item) {
+      $scope.removeItem(item);
+    };
+
+    $scope.removeItem = function(item) {
+      var i = -1;
+      angular.forEach($scope.items, function(task, key) {
+        if (item === task) {
+          i = key;
+        }
+        });   
+
+      if (i >= 0) {
+        $scope.items.splice(i, 1);
+        $localForage.setItem('__TASKS__', $scope.items);
+        return true;
+      }
+      return false;
+    };
+})
 // .controller('MyCtrl', function($scope, $timeout, PersonService) {
 //   $scope.items = [];
 

@@ -102,6 +102,16 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
       }
     })
 
+  // .state('tab.create', {
+  //   url: '/create',
+  //   views: {
+  //     'tab-posts': {
+  //       templateUrl: 'templates/create-event.html',
+  //       controller: ''
+  //     }
+  //   }
+  // })
+
   .state('tab.account', {
     url: '/account',
     views: {
@@ -115,8 +125,17 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
   .state('tab.terms', {
     url: '/account/terms',
     views: {
-      'tab-terms': {
+      'tab-account': {
         templateUrl: 'templates/terms-and-agreements.html'
+      }
+    }
+  })
+
+  .state('tab.privacy', {
+    url: '/account/privacy',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/privacy.html'
       }
     }
   })
@@ -136,11 +155,18 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     }
   })
 
+  .state('create-event', {
+    url: '/create',
+    templateUrl: 'templates/create-event.html',
+    controller: 'CreateCtrl'
+  })
+
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
+
 
   .state('logout', {
     url: '/logout',

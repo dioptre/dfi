@@ -32,8 +32,33 @@ angular.module('downForIt.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, TwitterLib) {
   $scope.chats = Chats.all();
+  $scope.message = {
+    text: ''
+  }
+  var options = {
+    url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
+    data: {
+      'screen_name': "aaronksaunders",
+      'count': "25"
+    }
+  };
+  TwitterLib.apiGetCall(options).then(function (_data) {
+    // alert("doStatus success");
+    $scope.items = _data;
+  }, function (_error) {
+    alert("doStatus error" + JSON.stringify(_error));
+  });
+
+  $scope.tweet = function() {
+    TwitterLib.tweet($scope.message.text).then(function (_data) {
+      alert("tweet success" + JSON.stringify(_data));
+    }, function (_error) {
+      alert("tweet error" + JSON.stringify(_error));
+    });
+  };
+
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
@@ -69,27 +94,27 @@ angular.module('downForIt.controllers', [])
 
 // })
 
-.controller('LoginCtrl', function($scope, Api, $state){
+.controller('LoginCtrl', function($scope, TwitterLib, $state){
 
   $scope.login = function(){
-    Api.init().then(function(response){
-      $scope.error = response;
+    TwitterLib.init().then(function (_data) {
+      //the whole data
+      alert(JSON.stringify(_data));
       $state.go('tab.home');
-    }, function(error){
-      $scope.error = error;
-      console.log(error);
+    }, function error(_error) {
+      alert(JSON.stringify(_error));
     });
   };
 
   $scope.logout = function(){
-    Api.logout();
+    TwitterLib.logOut();
   };
 
 })
 
-.controller('LogoutCtrl', function($scope, Api, $state){
+.controller('LogoutCtrl', function($scope, TwitterLib, $state){
 
-  Api.logout();
+  TwitterLib.logOut();
   $state.go('login');
 
 })

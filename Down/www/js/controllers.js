@@ -143,10 +143,3 @@ angular.module('downForIt.controllers', [])
       return false;
     };
 })
-// .controller('MyCtrl', function($scope, $timeout, PersonService) {
-//   $scope.items = [];
-
-//   PersonService.GetFeed().then(function(items){
-//     $scope.items = items;
-//   });
-// });

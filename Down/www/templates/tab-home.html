@@ -1,64 +1,30 @@
-<ion-view view-title="Event Feeds">
+<ion-view view-title="Events Feed">
+  <ion-header-bar>
+    <button class="button button-clear icon ion-plus" ng-click="newPost()"></button>
+    <h1 class="title">Dashboard</h1>
+  </ion-header-bar>
   <ion-content class="padding">
-    <div class="list card">
-
-      <div class="item item-avatar">
-        <img src="mcfly.jpg">
-        <h2>Marty McFly</h2>
-        <p>November 05, 1955</p>
+    <div class="list card" ng-repeat="chat in chats">
+      <div class="item item-avatar item-button-right">
+        <img ng-src="{{chat.face}}">
+        <h2>{{chat.name}}</h2>
+        <p>{{chat.created | date : 'short'}}</p>
+        <button class="button button-icon icon ion-navicon" ng-click="menu()"></button>
       </div>
-
       <div class="item item-body">
-        <img class="full-image" src="delorean.jpg">
-        <p>
-          This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-          the content is from a card-body consisting of an image and paragraph text. The footer
-          consists of tabs, icons aligned left, within the card-footer.
-        </p>
-        <p>
-          <a href="#" class="subdued">1 Like</a>
-          <a href="#" class="subdued">5 Comments</a>
-        </p>
+        <div>
+          {{chat.lastText}}
+        </div>
       </div>
-
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" href="#">
-          <i class="icon ion-thumbsup"></i>
-          Like
-        </a>
-        <a class="tab-item" href="#">
           <i class="icon ion-chatbox"></i>
-          Comment
+          Message
         </a>
         <a class="tab-item" href="#">
-          <i class="icon ion-share"></i>
-          Share
+          <i class="icon ion-thumbsup"></i>
+          Join
         </a>
-      </div>
-
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
       </div>
     </div>
   </ion-content>

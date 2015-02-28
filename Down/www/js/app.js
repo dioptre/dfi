@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
-angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth'])
+angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 'ngStorage'])
 
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -34,9 +34,10 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
+    parent: 'authenticated',
     templateUrl: "templates/tabs.html"
   })
 
@@ -108,6 +109,27 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
         controller: 'AccountCtrl'
       }
     }
+  })
+
+  .state('authenticated', {
+    abstract: true,
+    template: '<ui-view />',
+    resolve: {
+      user: function(Api, $state) {
+        if (Api.isAuthenticated()) {
+          return true;
+        } else {
+          return true; // @TODO: disable
+          $state.go('login');
+        }
+      }
+    }
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback

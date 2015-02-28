@@ -25,12 +25,11 @@ angular.module('downForIt.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Chats, $cordovaOauth) {
+.controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
-  window.cauth = $cordovaOauth;
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -49,19 +48,35 @@ angular.module('downForIt.controllers', [])
   $scope.posts = Posts.all();
 })
 
-.controller('AccountCtrl', function($scope, $cordovaOauth) {
+.controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
 
+})
+
+.controller('LoginCtrl', function($scope, Api, $state){
+
   $scope.login = function(){
-    $cordovaOauth.twitter('RtsdiI5bTz4GFcawWLYYRfIok', 'Q3OhpC8wmiijHI7gA2KqS6OOYn1q9TcgcJzaaQCI5v2kDqw0yl').then(function(response){
-      var axs = response.access_token;
-      $scope.response = response;
-      console.log(response);
+    Api.init().then(function(response){
+      if (response) {
+        $state.go('tab');
+      } else {
+        $scope.error = response;
+        console.log(response);
+      }
     }, function(error){
+      $scope.error = error;
       console.log(error);
-      $scope.response = error;
     });
   };
-});
+
+})
+
+// .controller('MyCtrl', function($scope, $timeout, PersonService) {
+//   $scope.items = [];
+
+//   PersonService.GetFeed().then(function(items){
+//     $scope.items = items;
+//   });
+// });

@@ -141,4 +141,88 @@ angular.module('downForIt.services', [])
       return posts[postId];
     }
   }
+
+})
+// .factory('PersonService', function($http){
+//   var BASE_URL = "http://api.randomuser.me/";
+//   var items = [];
+
+//   return {
+//     GetFeed: function(){
+//       return $http.get(BASE_URL+'?results=10').then(function(response){
+//         items = response.data.results;
+//         return items;
+//       });
+//     },
+//     GetNewUser: function(){
+//       return $http.get(BASE_URL).then(function(response){
+//         items = response.data.results;
+//         return items;
+//       });
+//     }
+//   }
+//   });
+
+.factory('Api', function($cordovaOauth, $cordovaOauthUtility, $http, $q) {
+    // 1
+    var twitterKey = "STORAGE.TWITTER.KEY";
+    var clientId = 'RtsdiI5bTz4GFcawWLYYRfIok';
+    var clientSecret = 'Q3OhpC8wmiijHI7gA2KqS6OOYn1q9TcgcJzaaQCI5v2kDqw0yl';
+
+    // 2
+    function storeUserToken(data) {
+        window.localStorage.setItem(twitterKey, JSON.stringify(data));
+    }
+
+    function getStoredToken() {
+        return window.localStorage.getItem(twitterKey);
+    }
+
+    // 3
+    function createTwitterSignature(method, url) {
+        var token = angular.fromJson(getStoredToken());
+        var oauthObject = {
+            oauth_consumer_key: clientId,
+            oauth_nonce: $cordovaOauthUtility.createNonce(10),
+            oauth_signature_method: "HMAC-SHA1",
+            oauth_token: token.oauth_token,
+            oauth_timestamp: Math.round((new Date()).getTime() / 1000.0),
+            oauth_version: "1.0"
+        };
+        var signatureObj = $cordovaOauthUtility.createSignature(method, url, oauthObject, {}, clientSecret, token.oauth_token_secret);
+        $http.defaults.headers.common.Authorization = signatureObj.authorization_header;
+    }
+
+    return {
+        // 4
+        init: function() {
+            var deferred = $q.defer();
+            var token = getStoredToken();
+
+            if (token !== null) {
+                deferred.resolve(true);
+            } else {
+                $cordovaOauth.twitter(clientId, clientSecret).then(function(result) {
+                    storeUserToken(result);
+                    deferred.resolve(result);
+                }, function(error) {
+                    deferred.reject(error);
+                });
+            }
+            return deferred.promise;
+        },
+        // 5
+        isAuthenticated: function() {
+            return getStoredToken() !== null;
+        },
+        // 6
+        getHomeTimeline: function() {
+            var home_tl_url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
+            createTwitterSignature('GET', home_tl_url);
+            return $http.get(home_tl_url);
+        },
+        storeUserToken: storeUserToken,
+        getStoredToken: getStoredToken,
+        createTwitterSignature: createTwitterSignature
+    };
 });

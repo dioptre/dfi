@@ -5,7 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
-angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 'ngStorage'])
+angular.module('downForIt', [
+  'ionic', 'downForIt.controllers', 'downForIt.services','ngCordova.plugins.geolocation', 'ngStorage'
+])
 
 .run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
@@ -144,13 +146,8 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     abstract: true,
     template: '<ui-view />',
     resolve: {
-      user: function(Api, $q) {
-        if (Api.isAuthenticated()) {
-          return true;
-        } else {
-          return true; // @TODO: disable
-          return $q.reject('YOU NEED TO LOGIN');
-        }
+      user: function(TwitterLib, $q) {
+        return TwitterLib.verify();
       }
     }
   })

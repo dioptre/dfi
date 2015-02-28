@@ -1,14 +1,8 @@
 angular.module('downForIt.controllers', [])
 
-.controller('HomeCtrl', function($scope, Chats, $ionicActionSheet, Api) {
+.controller('HomeCtrl', function($scope, Chats, $ionicActionSheet) {
   $scope.chats = Chats.all();
 
-
-  Api.get('search/tweets').then(function(response){
-    $scope.tweets = response;
-  }, function(error){
-    $scope.error = error;
-  });
 
   // Triggered on a button click, or some other target
   $scope.menu = function() {
@@ -69,27 +63,21 @@ angular.module('downForIt.controllers', [])
 
 // })
 
-.controller('LoginCtrl', function($scope, Api, $state){
+.controller('LoginCtrl', function($scope, $state){
 
   $scope.login = function(){
-    Api.init().then(function(response){
-      $scope.error = response;
-      $state.go('tab.home');
-    }, function(error){
-      $scope.error = error;
-      console.log(error);
-    });
+    // auth().then -> $state.go('tab.home')
   };
 
   $scope.logout = function(){
-    Api.logout();
+    // auth.logout()
   };
 
 })
 
 .controller('LogoutCtrl', function($scope, Api, $state){
 
-  Api.logout();
+  // auth.logout()
   $state.go('login');
 
 })

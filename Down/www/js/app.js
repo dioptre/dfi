@@ -125,8 +125,9 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     abstract: true,
     template: '<ui-view />',
     resolve: {
-      user: function(Api, $q) {
-        if (Api.isAuthenticated()) {
+      user: function($q) {
+        return true;
+        if (true) {
           return true;
         } else {
           return true; // @TODO: disable

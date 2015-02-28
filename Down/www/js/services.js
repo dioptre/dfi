@@ -193,6 +193,15 @@ angular.module('downForIt.services', [])
         $http.defaults.headers.common.Authorization = signatureObj.authorization_header;
     }
 
+    function serialize(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    }
+
     return {
         // 4
         init: function() {
@@ -200,13 +209,13 @@ angular.module('downForIt.services', [])
             var token = getStoredToken();
 
             if (!!token) {
-                deferred.resolve(true);
+                deferred.resolve('pre-success' + token);
             } else {
                 $cordovaOauth.twitter(clientId, clientSecret).then(function(result) {
                     storeUserToken(result);
-                    deferred.resolve(result);
+                    deferred.resolve('success' + result);
                 }, function(error) {
-                    deferred.reject(error);
+                    deferred.reject('error' + error);
                 });
             }
             return deferred.promise;
@@ -225,7 +234,10 @@ angular.module('downForIt.services', [])
           storeUserToken(null);
         },
         get: function(url, options){
-          url = 'https://api.twitter.com/1.1/' + url + '.json';
+          options = options || {};
+          options.params = options.params || {};
+          url = 'https://api.twitter.com/1.1/' + url + '.json?' + serialize(options.params);
+          delete options.params;
           createTwitterSignature('GET', url);
           return $http.get(url, options);
         },

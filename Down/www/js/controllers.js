@@ -4,7 +4,7 @@ angular.module('downForIt.controllers', [])
   $scope.chats = Chats.all();
 
 
-  Api.get('tweets', { params: { q: '#test'}}).then(function(response){
+  Api.get('search/tweets').then(function(response){
     $scope.tweets = response;
   }, function(error){
     $scope.error = error;
@@ -72,6 +72,10 @@ angular.module('downForIt.controllers', [])
       $scope.error = error;
       console.log(error);
     });
+  };
+
+  $scope.logout = function(){
+    Api.logout();
   };
 
 })

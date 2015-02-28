@@ -120,7 +120,7 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
         if (Api.isAuthenticated()) {
           return true;
         } else {
-          // return true; // @TODO: disable
+          return true; // @TODO: disable
           return $q.reject('YOU NEED TO LOGIN');
         }
       }

@@ -112,6 +112,15 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     }
   })
 
+  .state('tab.terms', {
+    url: '/account/terms',
+    views: {
+      'tab.terms': {
+        templateUrl: 'templates/terms-and-agreements.html'
+      }
+    }
+  })
+
   .state('authenticated', {
     abstract: true,
     template: '<ui-view />',

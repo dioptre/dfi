@@ -57,10 +57,17 @@ angular.module('downForIt.controllers', [])
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    directMessage: true,
+    discover: true,
+    newEvent: true
   };
 
 })
+
+// .controller('TermsCtrl', function($scope, Terms) {
+//   $scope.terms = Terms.all();
+
+// })
 
 .controller('LoginCtrl', function($scope, Api, $state){
 

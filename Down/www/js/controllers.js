@@ -57,11 +57,11 @@ angular.module('downForIt.controllers', [])
   $scope.login = function(){
     $cordovaOauth.twitter('RtsdiI5bTz4GFcawWLYYRfIok', 'Q3OhpC8wmiijHI7gA2KqS6OOYn1q9TcgcJzaaQCI5v2kDqw0yl').then(function(response){
       var axs = response.access_token;
-      alert(JSON.stringify(response), 'DEBUG', 'DEBUG')
       $scope.response = response;
       console.log(response);
     }, function(error){
       console.log(error);
+      $scope.response = error;
     });
   };
 });

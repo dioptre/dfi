@@ -163,24 +163,24 @@ angular.module('downForIt.services', [])
 //   }
 //   });
 
-.factory('Api', function($cordovaOauth, $cordovaOauthUtility, $http, $q) {
+.factory('Api', function($cordovaOauth, $cordovaOauthUtility, $http, $q, $localStorage) {
     // 1
-    var twitterKey = "STORAGE.TWITTER.KEY";
+    var twitterKey = "TWITTER.KEY";
     var clientId = 'RtsdiI5bTz4GFcawWLYYRfIok';
     var clientSecret = 'Q3OhpC8wmiijHI7gA2KqS6OOYn1q9TcgcJzaaQCI5v2kDqw0yl';
 
     // 2
     function storeUserToken(data) {
-        window.localStorage.setItem(twitterKey, JSON.stringify(data));
+        $localStorage[twitterKey] = data;
     }
 
     function getStoredToken() {
-        return window.localStorage.getItem(twitterKey);
+        return $localStorage[twitterKey];
     }
 
     // 3
     function createTwitterSignature(method, url) {
-        var token = angular.fromJson(getStoredToken());
+        var token = getStoredToken();
         var oauthObject = {
             oauth_consumer_key: clientId,
             oauth_nonce: $cordovaOauthUtility.createNonce(10),
@@ -199,7 +199,7 @@ angular.module('downForIt.services', [])
             var deferred = $q.defer();
             var token = getStoredToken();
 
-            if (token !== null) {
+            if (!!token) {
                 deferred.resolve(true);
             } else {
                 $cordovaOauth.twitter(clientId, clientSecret).then(function(result) {
@@ -213,7 +213,7 @@ angular.module('downForIt.services', [])
         },
         // 5
         isAuthenticated: function() {
-            return getStoredToken() !== null;
+            return !!getStoredToken();
         },
         // 6
         getHomeTimeline: function() {
@@ -221,8 +221,13 @@ angular.module('downForIt.services', [])
             createTwitterSignature('GET', home_tl_url);
             return $http.get(home_tl_url);
         },
+        logout: function() {
+          storeUserToken(null);
+        },
         get: function(url, options){
-          return $http.get('https://api.twitter.com/1.1/' + url + '.json', options);
+          url = 'https://api.twitter.com/1.1/' + url + '.json';
+          createTwitterSignature('GET', url);
+          return $http.get(url, options);
         },
         storeUserToken: storeUserToken,
         getStoredToken: getStoredToken,

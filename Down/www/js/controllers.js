@@ -67,12 +67,19 @@ angular.module('downForIt.controllers', [])
   $scope.login = function(){
     Api.init().then(function(response){
       $scope.error = response;
-      $state.go('tab');
+      $state.go('tab.home');
     }, function(error){
       $scope.error = error;
       console.log(error);
     });
   };
+
+})
+
+.controller('LogoutCtrl', function($scope, Api, $state){
+
+  Api.logout();
+  $state.go('login');
 
 })
 

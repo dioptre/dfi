@@ -100,6 +100,19 @@ angular.module('downForIt.services', [])
   }
 })
 
+// .factory('Terms', function() {
+//   // Might use a resource here that returns a JSON array
+
+//   // Some fake testing data
+//   var terms = 'Terms';
+
+//   return {
+//     all: function() {
+//       return terms;
+//     },
+//   }
+// })
+
 .factory('Posts', function() {
   // Might use a resource here that returns a JSON array
 

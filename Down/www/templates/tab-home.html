@@ -4,7 +4,16 @@
       New
     </button>
   </ion-nav-buttons>
+
   <ion-content class="padding">
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <ion-list>
+      <ion-item class="item-avatar" ng-repeat="item in items">
+        <img src=" " />
+        ##  
+        <p> </p>
+      </ion-item>
+    </ion-list>
     <div class="list card" ng-repeat="chat in chats">
       <div class="item item-avatar item-button-right">
         <img ng-src="{{chat.face}}">

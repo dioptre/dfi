@@ -64,4 +64,13 @@ angular.module('downForIt.controllers', [])
       $scope.response = error;
     });
   };
-});
+
+})
+
+// .controller('MyCtrl', function($scope, $timeout, PersonService) {
+//   $scope.items = [];
+
+//   PersonService.GetFeed().then(function(items){
+//     $scope.items = items;
+//   });
+// });

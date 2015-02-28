@@ -1,0 +1,58 @@
+<ion-view view-title="Create a New Event">
+  <button ng-click="showTaskPrompt();" class="button button-icon icon ion-plus-round"></button>
+</ion-view>
+
+<ion-tabs class="tabs-background-positive tabs-icon-top">
+  <ion-tab title="Items" icon="ion-document-text">
+    <ion-content>
+      <div class="content padding" ng-show="items.length === 0">
+        You have everything done!
+        You need something to do. Why not add a task?
+      </div>
+      <ion-list can-swipe="true" show-delete="false">
+        <ion-item ng-repeat="item in items">
+          <h2>{{item.title}}</h2>
+          <p style="white-space:normal;">{{item.description}}</p>
+          <ion-option-button class="button-balanced" ng-click="completeItem(item)">
+            Done
+          </ion-option-button>
+
+          <ion-option-button class="button-assertive" ng-click="ignoreItem(item)">
+            Ignore
+          </ion-option-button>                
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-tab>
+
+  <ion-tab title="Details" icon="ion-information-circled">
+    <ion-content>
+      <div class="content padding">
+        You have {{items.length}} items outstanding
+      </div>
+    </ion-content>
+  </ion-tab>
+</ion-tabs>
+
+    <script id="task-prompt.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar-calm">
+          <h1 class="title">Add New Task</h1>
+        </ion-header-bar>
+        <ion-content>
+          <div class="list">
+            <label class="item item-input">
+              <input type="text" placeholder="task title" ng-model="newTask.title">
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="task description" ng-model="newTask.description"></textarea>
+            </label>
+          </div>
+
+          <div class="row">
+            <div class="col"><button ng-click="saveTask()" class="button button-full icon-left ion-checkmark-circled button-balanced">Save Task</button></div>
+            <div class="col"><button ng-click="cancelTask()" class="button button-full icon-left ion-close-circled button-assertive">Cancel</button></div>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>

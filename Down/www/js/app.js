@@ -6,7 +6,7 @@
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
 angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 
-  'ngStorage', 'LocalForageModule'])
+  'ngStorage'])
 
 .run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
@@ -108,7 +108,7 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
   //   views: {
   //     'tab-posts': {
   //       templateUrl: 'templates/create-event.html',
-  //       controller: 'CreateCtrl'
+  //       controller: ''
   //     }
   //   }
   // })

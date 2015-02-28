@@ -49,8 +49,17 @@ angular.module('downForIt.controllers', [])
   $scope.posts = Posts.all();
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, $cordovaOauth) {
   $scope.settings = {
     enableFriends: true
+  };
+
+  $scope.login = function(){
+    $cordovaOauth.twitter('RtsdiI5bTz4GFcawWLYYRfIok', 'Q3OhpC8wmiijHI7gA2KqS6OOYn1q9TcgcJzaaQCI5v2kDqw0yl').then(function(response){
+      $scope.response = response;
+      console.log(response);
+    }, function(error){
+      console.log(error);
+    });
   };
 });

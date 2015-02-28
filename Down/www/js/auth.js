@@ -4,10 +4,7 @@ angular.module('downForIt.controllers')
   $scope.login = function(){
     TwitterLib.init().then(function (_data) {
       //the whole data
-      alert(JSON.stringify(_data));
       $state.go('tab.home');
-    }, function error(_error) {
-      alert(JSON.stringify(_error));
     });
   };
 

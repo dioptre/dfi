@@ -36,7 +36,7 @@ angular.module('downForIt.controllers', [])
   $scope.chats = Chats.all();
   $scope.message = {
     text: ''
-  }
+  };
   var options = {
     url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
     data: {
@@ -76,10 +76,6 @@ angular.module('downForIt.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('PostsCtrl', function($scope, Posts) {
-  $scope.posts = Posts.all();
-})
-
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     directMessage: true,
@@ -93,6 +89,7 @@ angular.module('downForIt.controllers', [])
 //   $scope.terms = Terms.all();
 
 // })
+
 
 .controller('LoginCtrl', function($scope, TwitterLib, $state){
 
@@ -119,19 +116,18 @@ angular.module('downForIt.controllers', [])
 
 })
 
-.controller('CreateCtrl', function($scope, $ionicModal, $localForage) {
+.controller('PostsCtrl', function($scope, $ionicModal, Posts, $cordovaGeolocation) {
+
+    $scope.posts = Posts.all();
     $scope.items = [];
-    $localForage.getItem('__TASKS__').then(function(tasks) {
-      if (tasks) {
-        $scope.items = tasks;
-      }
-    });
-    
     // Initialize the dialog window
-    $ionicModal.fromTemplateUrl('create-events.html', {
+    $ionicModal.fromTemplateUrl('templates/create-events.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
+      $cordovaGeolocation.getCurrentPosition().then(function(position){
+        $scope.position = position;
+      });
       $scope.modal = modal;
     }); 
 
@@ -148,9 +144,6 @@ angular.module('downForIt.controllers', [])
 
     $scope.saveTask = function() {
       $scope.items.push($scope.newTask);
-      $localForage.setItem('__TASKS__', $scope.items).then(function() {
-        $scope.modal.hide();
-      });
     };
 
     $scope.cancelTask = function() {

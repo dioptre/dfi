@@ -222,7 +222,7 @@ angular.module('downForIt.services')
     //@param _message
     tweet: function (_message, _media) {
       return Twitter.verify().then(function () {
-        alert("in tweet verified success");
+        // alert("in tweet verified success");
 
         tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
         tParams = {
@@ -235,7 +235,7 @@ angular.module('downForIt.services')
 
       }, function (_error) {
           deferred.reject(JSON.parse(_error.text));
-          alert("in tweet " + _error.text);
+          // alert("in tweet " + _error.text);
       });
     },
     // uses oAuth library to make a GET call

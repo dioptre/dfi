@@ -40,7 +40,7 @@ angular.module('downForIt', [
   .state('tab', {
     url: "/tab",
     abstract: true,
-    parent: 'authenticated',
+    // parent: 'authenticated',
     templateUrl: "templates/tabs.html"
   })
 
@@ -171,6 +171,6 @@ angular.module('downForIt', [
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/login');
 
 });

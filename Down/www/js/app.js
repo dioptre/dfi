@@ -90,6 +90,16 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
       }
     })
 
+    .state('tab.posts', {
+      url: '/posts',
+      views: {
+        'tab-posts': {
+          templateUrl: 'templates/tab-posts.html',
+          controller: 'PostsCtrl'
+        }
+      }
+    })
+
   .state('tab.account', {
     url: '/account',
     views: {

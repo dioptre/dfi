@@ -1,7 +1,14 @@
 angular.module('downForIt.controllers', [])
 
-.controller('HomeCtrl', function($scope, Chats, $ionicActionSheet) {
+.controller('HomeCtrl', function($scope, Chats, $ionicActionSheet, Api) {
   $scope.chats = Chats.all();
+
+
+  Api.get('tweets', { params: { q: '#test'}}).then(function(response){
+    $scope.tweets = response;
+  }, function(error){
+    $scope.error = error;
+  });
 
   // Triggered on a button click, or some other target
   $scope.menu = function() {
@@ -59,12 +66,8 @@ angular.module('downForIt.controllers', [])
 
   $scope.login = function(){
     Api.init().then(function(response){
-      if (response) {
-        $state.go('tab');
-      } else {
-        $scope.error = response;
-        console.log(response);
-      }
+      $scope.error = response;
+      $state.go('tab');
     }, function(error){
       $scope.error = error;
       console.log(error);

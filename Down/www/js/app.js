@@ -7,7 +7,7 @@
 // 'downForIt.controllers' is found in controllers.js
 angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 'ngStorage'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)s
@@ -22,7 +22,8 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
 
   $rootScope.$on('$stateChangeError', function(){
     console.error(arguments);
-  })
+    $state.go('login');
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -115,12 +116,12 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
     abstract: true,
     template: '<ui-view />',
     resolve: {
-      user: function(Api, $state) {
+      user: function(Api, $q) {
         if (Api.isAuthenticated()) {
           return true;
         } else {
-          return true; // @TODO: disable
-          $state.go('login');
+          // return true; // @TODO: disable
+          return $q.reject('YOU NEED TO LOGIN');
         }
       }
     }

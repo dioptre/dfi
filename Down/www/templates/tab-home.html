@@ -6,6 +6,7 @@
 
   <ion-content class="padding">
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <pre>{{tweets||error|json}}</pre>
     <ion-list>
       <ion-item class="item-avatar" ng-repeat="item in items">
         <img src=" " />

@@ -221,6 +221,9 @@ angular.module('downForIt.services', [])
             createTwitterSignature('GET', home_tl_url);
             return $http.get(home_tl_url);
         },
+        get: function(url, options){
+          return $http.get('https://api.twitter.com/1.1/' + url + '.json', options);
+        },
         storeUserToken: storeUserToken,
         getStoredToken: getStoredToken,
         createTwitterSignature: createTwitterSignature

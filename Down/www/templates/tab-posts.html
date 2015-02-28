@@ -1,9 +1,9 @@
-<ion-view view-title="Friends">
+<ion-view view-title="Posts">
   <ion-content>
     <ion-list>
-      <ion-item class="item-avatar" ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-        <img ng-src="{{friend.face}}">
-        <h2>{{friend.name}}</h2>
+      <ion-item class="item-avatar" ng-repeat="post in posts" type="item-text-wrap" href="#/tab/posts/{{post.id}}">
+        <img ng-src="{{post.face}}">
+        <h2>{{post.name}}</h2>
       </ion-item>
     </ion-list>
   </ion-content>

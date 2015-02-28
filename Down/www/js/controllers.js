@@ -21,6 +21,10 @@ angular.module('downForIt.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
+.controller('PostsCtrl', function($scope, Posts) {
+  $scope.posts = Posts.all();
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true

@@ -7,7 +7,7 @@
 // 'downForIt.controllers' is found in controllers.js
 angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)s
@@ -19,6 +19,10 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
       StatusBar.styleDefault();
     }
   });
+
+  $rootScope.$on('$stateChangeError', function(){
+    console.error(arguments);
+  })
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

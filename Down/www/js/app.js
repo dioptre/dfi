@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
-angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 'ngStorage'])
+angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.services','ngCordovaOauth', 
+  'ngStorage', 'LocalForageModule'])
 
 .run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
@@ -102,6 +103,16 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
       }
     })
 
+  // .state('tab.create', {
+  //   url: '/create',
+  //   views: {
+  //     'tab-posts': {
+  //       templateUrl: 'templates/create-event.html',
+  //       controller: 'CreateCtrl'
+  //     }
+  //   }
+  // })
+
   .state('tab.account', {
     url: '/account',
     views: {
@@ -115,8 +126,17 @@ angular.module('downForIt', ['ionic', 'downForIt.controllers', 'downForIt.servic
   .state('tab.terms', {
     url: '/account/terms',
     views: {
-      'tab-terms': {
+      'tab-account': {
         templateUrl: 'templates/terms-and-agreements.html'
+      }
+    }
+  })
+
+  .state('tab.privacy', {
+    url: '/account/privacy',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/privacy.html'
       }
     }
   })

@@ -5,27 +5,32 @@
 
       <div class="item item-divider text-center">Preferences</div>
 
-      <ion-item class="item item-icon-right" href="#/account/location">
+      <ion-item class="item item-icon-right" href="#/tab/account/location">
+      <i class='ion-navigate'></i>
       Location
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#' ng-click="radius()">
+      <ion-item class="item item-icon-right" href='#/tab/account/radius'>
+      <i class='ion-ios-circle-filled'></i>
       Radius
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#' ng-click="age()">
+      <ion-item class="item item-icon-right" href='#/tab/account/age'>
+      <i class='ion-ios-people'></i>
       Age
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#' ng-click="alertFrequency()">
+      <ion-item class="item item-icon-right" href='#/tab/account/alert-frequency'>
+      <i class='ion-ios-bell'></i>
       Alert Frequency
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
       <ion-item class="item-toggle">
+      <i class='ion-ios-search-strong'></i>
         Discover
         <label class="toggle">
           <input type="checkbox" ng-model="settings.discover">

@@ -2,10 +2,9 @@
     <ion-content>
 
         <p ng-repeat="message in messages" title="{{message.created_at | date : 'short' }}">
-            <strong>{{message.sender}}:</strong> {{message.text}}
+            <img ng-src="{{message.sender.profile_image_url}}" />
+            <strong>{{message.sender.screen_name}}:</strong> {{message.text}}
         </p>
-        <pre>{{newMessage|json}}</pre>
-        <pre>{{chats|json}}</pre>
         <form ng-submit="message()">
             
           <label class="item item-input">

@@ -185,6 +185,16 @@ $stateProvider
   
   .state('tab.chat-detail', {
     url: '/chats/:chatId',
+    resolve: {
+      event: function(TwitterLib, $stateParams) {
+        return TwitterLib.apiGetCall({
+          url: 'https://api.twitter.com/1.1/statuses/show.json',
+          data: {
+            id: $stateParams.chatId
+          }
+        });
+      }
+    },
     views: {
       'tab-chats': {
         templateUrl: 'templates/messaging.html',

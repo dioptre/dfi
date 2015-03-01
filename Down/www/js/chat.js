@@ -1,6 +1,6 @@
 angular.module('downForIt.controllers')
 
-.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase, user) {
+.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase, user, utils, event) {
 
   var ref = new Firebase("https://downforit.firebaseio.com/");
   var eventRef = ref.child('events/'+$stateParams.chatId);
@@ -41,8 +41,7 @@ angular.module('downForIt.controllers')
     $scope.event.members[user.id] = true;
     if (!$scope.user.joined)
       $scope.user.joined = {};
-    alert($scope.user.joined[$scope.event.id]);
-    $scope.user.joined[$scope.event.id] = true;
+    $scope.user.joined[event.id] = true;
   };
 
   $scope.leave = function() {
@@ -54,7 +53,15 @@ angular.module('downForIt.controllers')
     if (!$scope.user.joined)
       $scope.user.joined = {};
     else
-      delete $scope.user.joined[$scope.event.id];
+      delete $scope.user.joined[event.id];
+  };
+
+  $scope.calendar = function() {
+    utils.addToCalendar(event).then(function(res){
+      alert('SUCCESS ' + JSON.stringify(res))
+    },function(res){
+      alert('ERROR ' + JSON.stringify(res))
+    });
   };
 
   $scope.reset = function() {
@@ -66,6 +73,92 @@ angular.module('downForIt.controllers')
 
   $scope.reset();
 
+})
+
+.factory('utils', function($q){
+
+  return {
+    getTime: function(tweet){
+      time = moment();
+      tweet.entities.hashtags.forEach(function(tag){
+        switch (tag.text) {
+          case '1am':
+          case '2am':
+          case '3am':
+          case '4am':
+          case '5am':
+          case '6am':
+          case '7am':
+          case '8am':
+          case '9am':
+          case '10am':
+          case '11am':
+            time.hour(tag.text.substr(0, tag.text.length - 2)-1).minutes(0).seconds(0);
+            break;
+          case '1pm':
+          case '2pm':
+          case '3pm':
+          case '4pm':
+          case '5pm':
+          case '6pm':
+          case '7pm':
+          case '8pm':
+          case '9pm':
+          case '10pm':
+          case '11pm':
+            time.hour(tag.text.substr(0, tag.text.length - 2)+11).minutes(0).seconds(0);
+            break;
+          case '12am':
+            time.hour(0).minutes(0).seconds(0);
+            break;
+          case '12pm':
+            time.hour(11).minutes(0).seconds(0);
+            break;
+        }
+
+        switch (tag.text.substr(0,3).toLowerCase()) {
+          case 'jan':
+          case 'feb':
+          case 'mar':
+          case 'apr':
+          case 'may':
+          case 'jun':
+          case 'jul':
+          case 'aug':
+          case 'sep':
+          case 'oct':
+          case 'nov':
+          case 'dec':
+            time.month(tag.text.substr(0,3).toLowerCase());
+            time.date(tag.text.substr(3));
+        }
+
+      });
+
+      return time;
+    },
+    addToCalendar: function(tweet) {
+      if (!window.cordova) return alert('Must be on mobile');
+      if (!window.cordova.plugins.CalendarPlugin) return alert('RUN: cordova plugin add fr.smile.cordova.calendar');
+
+      var deferred = $q.defer();
+      cordova.plugins.CalendarPlugin.createEvent(
+          tweet.text,
+          tweet.location,
+          '',
+          this.getTime(tweet) || 0, // Start date as a timestamp in ms
+          endTime || 0, // End date as a timestamp in ms
+          !!allDay, // Whether it is an all day event or not,
+          function(res){ // function called on success
+            deferred.resolve(res);
+          },
+          function(res){ // function called on error
+            deferred.reject(res);
+          }
+      );
+      return deferred.promise;
+    }
+  };
 })
 
 .filter('ngdate', function(){

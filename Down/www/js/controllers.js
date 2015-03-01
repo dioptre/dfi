@@ -26,9 +26,9 @@ angular.module('downForIt.controllers', [])
         // $scope.data = arg;
         // $scope.$broadcast('scroll.refreshComplete');
 
-        alert(JSON.stringify(tags))
-        alert(JSON.stringify(arg).length)
-        alert(JSON.stringify($scope.data).length)
+        // alert(JSON.stringify(tags))
+        // alert(JSON.stringify(arg).length)
+        // alert(JSON.stringify($scope.data).length)
       }, function(error){
         //alert(JSON.stringify(error))
       });

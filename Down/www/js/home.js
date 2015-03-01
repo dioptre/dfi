@@ -1,6 +1,6 @@
 angular.module('downForIt.controllers')
 
-.controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet) {
+.controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet, $state) {
 
   $scope.tweets = [
     {
@@ -47,9 +47,7 @@ angular.module('downForIt.controllers')
     $scope.tweets = response.statuses;
   });
 
-  // Triggered on a button click, or some other target
   $scope.menu = function() {
-
    // Show the action sheet
    var hideSheet = $ionicActionSheet.show({
      buttons: [
@@ -65,8 +63,8 @@ angular.module('downForIt.controllers')
        return true;
      }
    });
-
   };
+
 })
 
 .filter('tags', function(){

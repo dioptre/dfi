@@ -291,7 +291,7 @@ angular.module('downForIt.services')
             url: tUrl,
             params: {
               in_reply_to_status_id : event.id,
-              status: "@" + event.user.screen_name + " #downforit +1"
+              status: "@" + event.user.screen_name + " #downforit #plusone"
             }
         });
 
@@ -304,7 +304,7 @@ angular.module('downForIt.services')
             url: tUrl,
             params: {
               in_reply_to_status_id : event.id,
-              status: "@" + event.user.screen_name + " #downforit -1"
+              status: "@" + event.user.screen_name + " #downforit #minusone"
             }
         });
     },
@@ -322,20 +322,16 @@ angular.module('downForIt.services')
       });
 
     },
-    attendingEvents: function (events) {
+    attendingEvents: function (events, screen_name) {
       return Twitter.verify().then(function () {      
-        //tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&exclude_replies=15';
-        tUrl = 'https://api.twitter.com/1.1/statuses/lookup.json';
-        alert(encodeURIComponent(events.join(',')))
+        tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=65&exclude_replies=150&screen_name=' + screen_name;
+        //tUrl = 'https://api.twitter.com/1.1/statuses/lookup.json?id=' + events.join(',');
+        //alert(encodeURIComponent(events.join(',')))
         return Twitter.apiGetCall({
-            url: tUrl,
-            data: {
-              id: events[0]
-            }
-        }).then(function(res){
-          alert('suc'+JSON.stringify(res))
-        }, function(res){
-alert('err'+JSON.stringify(res))
+            url: tUrl//,
+            // data: {
+            //   id: events[0]
+            // }
         });
 
       }, function (_error) {

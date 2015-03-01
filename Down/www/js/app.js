@@ -46,9 +46,11 @@ $stateProvider
     resolve:{
       user: function(TwitterLib){
         // @TODO: Uncomment for emulator
-        // return TwitterLib.apiGetCall({
-        //   url: 'https://api.twitter.com/1.1/account/verify_credentials.json'
-        // });
+
+        if (window.cordova)
+          return TwitterLib.apiGetCall({
+            url: 'https://api.twitter.com/1.1/account/verify_credentials.json'
+          });
         return {
           "contributors_enabled": true,
           "created_at": "Sat May 09 17:58:22 +0000 2009",

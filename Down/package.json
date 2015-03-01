@@ -16,6 +16,7 @@
   },
   "cordovaPlugins": [
     "org.apache.cordova.dialogs",
-    "org.apache.cordova.geolocation"
+    "org.apache.cordova.geolocation",
+    "fr.smile.cordova.calendar"
   ]
 }

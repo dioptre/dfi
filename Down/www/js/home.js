@@ -1,8 +1,14 @@
 angular.module('downForIt.controllers')
 
-.controller('HomeCtrl', function($scope, TwitterLib, $state, $stateParams, $firebase, user) {
+.controller('HomeCtrl', function($scope, TwitterLib, $state, $stateParams, $firebase, user, $http) {
 
   $scope.tag = $stateParams.tag;
+
+  if ($scope.tag) {
+    $http.get('https://api.flickr.com/services/rest/?per_page=1&format=json&sort=random&method=flickr.photos.search&tags='+$scope.tag+'&api_key=5f90db6f11e587d8be3a1924c31ebe67&nojsoncallback=1').then(function(response){
+      $scope.banner = response.data.photos.photo[0];
+    });
+  }
 
   $scope.tweets = [
     {

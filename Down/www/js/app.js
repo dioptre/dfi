@@ -187,14 +187,18 @@ $stateProvider
     url: '/chats/:chatId',
     resolve: {
       event: function(TwitterLib, $stateParams) {
-        return TwitterLib.verify().then(function(res){
-          return TwitterLib.apiGetCall({
-            url: 'https://api.twitter.com/1.1/statuses/show.json',
-            data: {
-              id: $stateParams.chatId
-            }
+        if (window.cordova)
+          return TwitterLib.verify().then(function(res){
+            return TwitterLib.apiGetCall({
+              url: 'https://api.twitter.com/1.1/statuses/show.json',
+              data: {
+                id: $stateParams.chatId
+              }
+            });
           });
-        });
+        return {
+          id: $stateParams.chatId
+        };
       }
     },
     views: {

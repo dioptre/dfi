@@ -226,11 +226,11 @@ angular.module('downForIt.services')
 
         tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
         tParams = {
-            'status': _message.status,
-            'lat': _message.lat,
-            'long': _message.lng,
-            'display_coordinates': true,
-            'place_id': _message.place_id
+            'status': _message,
+            // 'lat': _message.lat,
+            // 'long': _message.lng,
+            // 'display_coordinates': true,
+            // 'place_id': _message.place_id
         };
         return Twitter.apiPostCall({
             url: tUrl,
@@ -286,13 +286,9 @@ angular.module('downForIt.services')
     //
     //clear out the tokens stored in local storage
     logOut: function () {
-      // alert('TEST logOut');
-      $rootScope.data = undefined;
       window.localStorage.removeItem(twitterKey);
       options.accessTokenKey = null;
       options.accessTokenSecret = null;
-      // console.log("Please authenticate to use this app");
-      $state.go('login');
     }
   };
   return Twitter;

@@ -53,7 +53,7 @@ angular.module('downForIt.controllers', [])
   });
 
   $scope.tweet = function() {
-    TwitterLib.tweet({status : $scope.message.text}).then(function (_data) {
+    TwitterLib.tweet($scope.message.text).then(function (_data) {
       alert("tweet success" + JSON.stringify(_data));
     }, function (_error) {
       alert("tweet error" + JSON.stringify(_error));
@@ -86,61 +86,52 @@ angular.module('downForIt.controllers', [])
 
 })
 
-.controller('PostsCtrl', function($scope, $ionicModal, Posts, $cordovaGeolocation) {
+.controller('CreateEventCtrl', function($scope, $cordovaGeolocation, TwitterLib, Posts){
+
+  $scope.newEvent = {
+    text: '',
+    description: '',
+    location: null
+  };
+
+  $scope.test = function(){
+    Posts.update().then(function(err){
+      $scope.error = err;
+    },function(err){
+      $scope.error = err;
+    });
+  }
+
+  $cordovaGeolocation.getCurrentPosition().then(function(position){
+        $scope.position = position;
+      });
+    $scope.tweet = function() {
+      message = {
+          'status': $scope.newEvent.text,
+          'lat': $scope.newEvent.location.geometry.location.k,
+          'long': $scope.newEvent.location.geometry.location.D,
+          'display_coordinates': true,
+          'place_id': $scope.newEvent.location.place_id
+      }
+
+      if (!!~message.status.toLowerCase().indexOf('#down4it')) {
+        message.status = '#down4it ' + message.status;
+      }
+      $scope.error = message;
+      TwitterLib.tweet(message).then(function(response){
+        $scope.error = response;
+      }, function(error){
+        $scope.error = error;
+      });
+    };
+
+    $scope.cancel = function() {
+      $scope.modal.hide();
+    };
+  })
+
+.controller('PostsCtrl', function($scope, Posts) {
 
     $scope.posts = Posts.all();
     $scope.items = [];
-    // Initialize the dialog window
-    $ionicModal.fromTemplateUrl('templates/create-events.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $cordovaGeolocation.getCurrentPosition().then(function(position){
-        $scope.position = position;
-      });
-      $scope.modal = modal;
-    }); 
-
-    $scope.showTaskPrompt = function() {
-      var newTask = {
-        title: '',
-        description: '',
-        isComplete: null
-      };  
-
-      $scope.newTask = newTask;
-      $scope.modal.show();
-    };
-
-    $scope.saveTask = function() {
-      $scope.items.push($scope.newTask);
-    };
-
-    $scope.cancelTask = function() {
-      $scope.modal.hide();
-    };
-
-    $scope.completeItem = function(item) {
-      $scope.removeItem(item);
-    };
-
-    $scope.ignoreItem = function(item) {
-      $scope.removeItem(item);
-    };
-
-    $scope.removeItem = function(item) {
-      var i = -1;
-      angular.forEach($scope.items, function(task, key) {
-        if (item === task) {
-          i = key;
-        }
-        });   
-
-      if (i >= 0) {
-        $scope.items.splice(i, 1);
-        $localForage.setItem('__TASKS__', $scope.items);
-        return true;
-      }
-      return false;
-    };
 })

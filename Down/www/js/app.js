@@ -105,6 +105,16 @@ angular.module('downForIt', [
       }
     })
 
+    .state('tab.create', {
+      url: '/create',
+      views: {
+        'tab-posts': {
+          templateUrl: 'templates/create-event.html',
+          controller: 'CreateEventCtrl'
+        }
+      }
+    })
+
   // .state('tab.create', {
   //   url: '/create',
   //   views: {
@@ -151,12 +161,6 @@ angular.module('downForIt', [
         return TwitterLib.verify();
       }
     }
-  })
-
-  .state('create-event', {
-    url: '/create',
-    templateUrl: 'templates/create-event.html',
-    controller: 'CreateCtrl'
   })
 
   .state('login', {

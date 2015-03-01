@@ -1,6 +1,8 @@
 angular.module('downForIt.controllers')
 
-.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase, user, utils, event) {
+.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase, user, utils, event, $ionicScrollDelegate) {
+
+
 
   var ref = new Firebase("https://downforit.firebaseio.com/");
   var eventRef = ref.child('events/'+$stateParams.chatId);
@@ -12,6 +14,7 @@ angular.module('downForIt.controllers')
   syncEvent.$bindTo($scope, "event").then(function(){
     // BOUND, data exists!
     // $scope.chats = {};
+    //$ionicScrollDelegate.scrollBottom();
   });
 
   var syncMessages = $firebase(eventRef.child('chatroom').orderByChild('created_at DESC')).$asArray();
@@ -34,6 +37,7 @@ angular.module('downForIt.controllers')
     $scope.event.chatroom[new Date().getTime()] = $scope.newMessage;
     $scope.join();
     $scope.reset();
+
   };
 
   $scope.join = function() {

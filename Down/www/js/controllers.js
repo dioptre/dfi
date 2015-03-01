@@ -53,7 +53,7 @@ angular.module('downForIt.controllers', [])
   });
 
   $scope.tweet = function() {
-    TwitterLib.tweet($scope.message.text).then(function (_data) {
+    TwitterLib.tweet({status:$scope.message.text}).then(function (_data) {
       alert("tweet success" + JSON.stringify(_data));
     }, function (_error) {
       alert("tweet error" + JSON.stringify(_error));
@@ -95,40 +95,40 @@ angular.module('downForIt.controllers', [])
   };
 
   $scope.test = function(){
-    Posts.update().then(function(err){
+    Posts.update($scope.newEvent.text).then(function(err){
       $scope.error = err;
     },function(err){
       $scope.error = err;
     });
-  }
+  };
 
-  $cordovaGeolocation.getCurrentPosition().then(function(position){
-        $scope.position = position;
-      });
-    $scope.tweet = function() {
-      message = {
-          'status': $scope.newEvent.text,
-          'lat': $scope.newEvent.location.geometry.location.k,
-          'long': $scope.newEvent.location.geometry.location.D,
-          'display_coordinates': true,
-          'place_id': $scope.newEvent.location.place_id
-      }
-
-      if (!!~message.status.toLowerCase().indexOf('#down4it')) {
-        message.status = '#down4it ' + message.status;
-      }
-      $scope.error = message;
-      TwitterLib.tweet(message).then(function(response){
-        $scope.error = response;
-      }, function(error){
-        $scope.error = error;
-      });
+  $scope.tweet = function() {
+    message = {
+        'status': $scope.newEvent.text,
     };
 
-    $scope.cancel = function() {
-      $scope.modal.hide();
-    };
-  })
+    if (!~message.status.toLowerCase().indexOf('#down4it')) {
+      message.status = '#down4it ' + message.status;
+    }
+
+    if ($scope.newEvent.location) {
+      message.lat = $scope.newEvent.location.geometry.location.k;
+      message.long = $scope.newEvent.location.geometry.location.D;
+      // message.place_id = $scope.newEvent.location.place_id;
+    }
+
+    $scope.error = message;
+    TwitterLib.tweet(message).then(function(response){
+      $scope.error = response;
+    }, function(error){
+      $scope.error = error;
+    });
+  };
+
+  $scope.cancel = function() {
+    $scope.modal.hide();
+  };
+})
 
 .controller('PostsCtrl', function($scope, Posts) {
 

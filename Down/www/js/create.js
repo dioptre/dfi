@@ -11,21 +11,21 @@ angular.module('downForIt.controllers')
   $scope.tweet = function() {
     message = {};
 
-     message.status =' #' + $scope.newEvent.what.split(' ').join(' #');
+   message.status =' #' + $scope.newEvent.what.split(' ').join(' #');
+   if ($scope.newEvent.date)
+     message.status += moment($scope.newEvent.date).format(' #MMMD');
+   if ($scope.newEvent.time)
+     message.status += moment($scope.newEvent.time).format(' #ha');
 
     if ($scope.newEvent.where) {
       message.lat = $scope.newEvent.where.geometry.location.k;
       message.long = $scope.newEvent.where.geometry.location.D;
       // message.place_id = $scope.newEvent.location.place_id;
-      message.status += ' @' + $scope.newEvent.where.address_components[0].short_name.split(' ').join('')+'!';
+      message.status += ' @ #' + $scope.newEvent.where.address_components[0].short_name.split(' ').join('')+'!';
     }
 
-     message.status += 'Who\'s #downforit? @BBYOpen';
+     message.status += ' Anyone #downforit? w\ @BBYOpen';
      
-     if ($scope.newEvent.date)
-       message.status += moment($scope.newEvent.date).format(' #MMMD');
-     if ($scope.newEvent.time)
-       message.status += moment($scope.newEvent.time).format(' #ha');
 
     TwitterLib.tweet(message).then(function(response){
       alert('Event Tweeted!');

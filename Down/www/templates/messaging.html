@@ -1,0 +1,17 @@
+<ion-view view-title="New Message">
+    <ion-content>
+
+        <p ng-repeat="message in messages" title="{{message.created_at | date : 'short' }}">
+            <img ng-src="{{message.sender.profile_image_url}}" />
+            <strong>{{message.sender.screen_name}}:</strong> {{message.text}}
+        </p>
+        <form ng-submit="message()">
+            
+          <label class="item item-input">
+            <input placeholder="Say hi to join event" ng-model="newMessage.text">
+          </label>
+
+          <button class="button button-full icon-left ion-checkmark-circled button-balanced">Send Message</button>
+        </form>
+  	</ion-content>
+</ion-view>

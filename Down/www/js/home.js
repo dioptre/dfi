@@ -4,6 +4,7 @@ angular.module('downForIt.controllers')
 
   $scope.tweets = [
     {
+      id: 571882561464508400,
       'created_at': 'Sun Mar 01 02:26:30 +0000 2015',
       'text': '#down4it #hacking @ #fortmason',
       user: {

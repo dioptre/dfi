@@ -1,12 +1,27 @@
 angular.module('downForIt.controllers')
 
-.controller('ChatsCtrl', function($scope, Chats, TwitterLib) {
-  //TODO : We need to import that names and start a message and message id to start
-  //a group conversation
-  $scope.chats = Chats.all();
-  $scope.message = {
-    text: ''
-  };
+.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase) {
+
+  var user = null;
+
+  TwitterLib.apiGetCall({
+    url: 'https://api.twitter.com/1.1/account/verify_credentials.json'
+  }).then(function(response){
+    user = response;
+  });
+  var ref = new Firebase("https://downforit.firebaseio.com/events/"+$stateParams.chatId);
+
+  var syncEvent = $firebase(ref).$asObject();
+  syncEvent.$bindTo($scope, "event").then(function(){
+    // BOUND, data exists!
+    // $scope.chats = {};
+    if (!$scope.event.chatroom) {
+      $scope.event.chatroom = {};
+    }
+  });
+
+  var syncMessages = $firebase(ref.child('chatroom').orderByChild('created_at DESC')).$asArray();
+  $scope.messages = syncMessages;
 
   var options = {
     url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
@@ -16,26 +31,20 @@ angular.module('downForIt.controllers')
     }
   };
   
-  TwitterLib.apiGetCall(options).then(function (_data) {
-    // alert("doStatus success");
-    $scope.items = _data;
-  }, function (_error) {
-    alert("doStatus error" + JSON.stringify(_error));
-  });
-
-  $scope.tweet = function() {
-    TwitterLib.tweet({status:$scope.message.text}).then(function (_data) {
-      alert("tweet success" + JSON.stringify(_data));
-    }, function (_error) {
-      alert("tweet error" + JSON.stringify(_error));
-    });
+  $scope.message = function() {
+    $scope.newMessage.created_at = new Date().getTime();
+    $scope.newMessage.sender = user;
+    $scope.event.chatroom[new Date().getTime()] = $scope.newMessage;
+    $scope.reset();
   };
 
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  $scope.reset = function() {
+    $scope.newMessage = {
+      text: '',
+    };
   };
-})
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+
+  $scope.reset();
+
 });

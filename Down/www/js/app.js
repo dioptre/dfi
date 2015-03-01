@@ -6,8 +6,8 @@
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
 angular.module('downForIt', [
-  'ionic', 'downForIt.controllers', 'downForIt.services','ngCordova.plugins.geolocation', 'ngStorage',
-  'ion-google-place'
+  'ionic', 'downForIt.controllers', 'downForIt.services','ngCordova.plugins.geolocation',
+  'ion-google-place', 'firebase'
 ])
 
 .run(function($ionicPlatform, $rootScope, $state) {
@@ -59,24 +59,17 @@ $stateProvider
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+  
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/messaging.html',
+        controller: 'ChatDetailCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/messaging.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
+    }
+  })
+
 
   .state('tab.friends', {
       url: '/friends',

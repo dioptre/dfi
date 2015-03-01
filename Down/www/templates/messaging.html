@@ -3,7 +3,7 @@
         <h5 class="text-center">{{(event.members | count) || 1 }} Member(s) <i class="icon ion-ios-star" ng-show="favorited"></i></h5>
         <ion-list>
 			<div ng-repeat="message in messages" class='padding' ng-class="{'onto-right':$odd,'onto-left':$even}">
-	            <img ng-src="{{message.sender.profile_image_url}}" /> <strong>{{message.sender.screen_name}}  </strong>
+	            <img ng-src="{{message.sender.profile_image_url}}" class='padding' /> <strong>{{message.sender.screen_name}}  </strong>
 	            <p>{{message.text}}</p>
 	            <small>{{message.created_at | ngdate | date: 'short'}}</small>
 	        </div>

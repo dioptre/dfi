@@ -4,8 +4,8 @@
         <ion-list>
 			<div ng-repeat="message in messages" class='padding' ng-class="{'onto-right':$odd,'onto-left':$even}">
 	            <img ng-src="{{message.sender.profile_image_url}}" class='padding' /> <strong>{{message.sender.screen_name}}  </strong>
-	            <p>{{message.text}}</p>
-	            <small>{{message.created_at | ngdate | date: 'short'}}</small>
+	            <p class='padding'>{{message.text}}</p>
+	            <small class='padding'>{{message.created_at | ngdate | date: 'short'}}</small>
 	        </div>
     	</ion-list>
 		

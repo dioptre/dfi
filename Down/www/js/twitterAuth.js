@@ -251,11 +251,30 @@ angular.module('downForIt.services')
       return Twitter.verify().then(function () {      
         var geo = '';
         var today = moment(new Date()).format('#MMMD');
-        if (false && filter.lat && filter.long)
+        if (filter.lat && filter.long)
           geo = 'geocode=' + filter.lat + ',' + filter.long + ',20mi&';
         tUrl = 'https://api.twitter.com/1.1/search/tweets.json?' + geo +'q=';
-        tUrl += encodeURIComponent(today);
-        alert(tUrl)
+        tUrl += encodeURIComponent("#downforit " + today);
+        //alert(tUrl)
+        return Twitter.apiGetCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+
+    },
+    attendingEvents: function (filter) {
+      return Twitter.verify().then(function () {      
+        var geo = '';
+        var today = moment(new Date()).format('#MMMD');
+        if (filter.lat && filter.long)
+          geo = 'geocode=' + filter.lat + ',' + filter.long + ',20mi&';
+        tUrl = 'https://api.twitter.com/1.1/search/tweets.json?' + geo +'q=';
+        tUrl += encodeURIComponent("#downforit " + today);
+        //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl
         });

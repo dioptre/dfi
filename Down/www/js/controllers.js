@@ -64,26 +64,26 @@ angular.module('downForIt.controllers', [])
 
 .controller('PostsCtrl', function($scope, Posts, user, TwitterLib, $cordovaGeolocation) {
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  alert($cordovaGeolocation);
+  //alert($cordovaGeolocation);
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
     .then(function (position) {
-      alert(position)
+      //alert(position)
       var message = {};
       message.lat  = position.coords.latitude;
       message.long = position.coords.longitude;
       TwitterLib.upcomingEvents(message).then(function (arg) {
-        alert(JSON.stringify(arg))
+        //alert(JSON.stringify(arg))
         $scope.data = arg;
       }, function(error){
-        alert(JSON.stringify(error))
+        //alert(JSON.stringify(error))
       });
     }, function(err) {
       TwitterLib.upcomingEvents({lat:37.775 , long: -122.418333333333}).then(function (arg) {
-        alert(JSON.stringify(arg))
+        //alert(JSON.stringify(arg))
         $scope.data = arg;
       }, function(error){
-        alert(JSON.stringify(error))
+        //alert(JSON.stringify(error))
       });
     });
 

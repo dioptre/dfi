@@ -15,9 +15,7 @@ angular.module('downForIt.controllers')
 
      message.status += ' #' + $scope.newEvent.what.split(' ').join(' #');
 
-     var when = new Date($scope.newEvent.when);
-
-     message.status += ' #d' + when.getDate() + 'm' + (when.getMonth() + 1)
+     message.status += moment($scope.newEvent.when).format(' #MMMD #ha');
 
 
     if ($scope.newEvent.where) {

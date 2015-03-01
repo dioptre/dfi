@@ -6,7 +6,8 @@
 // 'downForIt.services' is found in services.js
 // 'downForIt.controllers' is found in controllers.js
 angular.module('downForIt', [
-  'ionic', 'downForIt.controllers', 'downForIt.services','ngCordova.plugins.geolocation', 'ngStorage'
+  'ionic', 'downForIt.controllers', 'downForIt.services','ngCordova.plugins.geolocation', 'ngStorage',
+  'ion-google-place'
 ])
 
 .run(function($ionicPlatform, $rootScope, $state) {

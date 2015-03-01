@@ -16,9 +16,11 @@ angular.module('downForIt.controllers', [])
     },
     attendingEvents : function (tags) {
       
-      TwitterLib.attendingEvents(tags).then(function (arg) {
-        $scope.data = arg;
-        alert(JSON.stringify(arg))
+      TwitterLib.attendingEvents(tags, user.screen_name).then(function (arg) {
+
+        var theirs = Enumerable.From(arg).Join(tags,"$.in_reply_to_status_id_str", "", "outer,inner=>outer");
+        var mine = Enumerable.From(arg).Join([user.screen_name], "$.screen_name", "", "outer,inner=>outer").Where("$.text.match(/#downforit/ig)");
+        $scope.data = theirs.Union(mine, "$.id").ToArray();
       }, function(error){
         //alert(JSON.stringify(error))
       });

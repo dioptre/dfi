@@ -284,14 +284,14 @@ angular.module('downForIt.services')
       });
 
     },
-    goingEvent: function(event) {
+    goingEvent: function(eventId) {
        tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
 
         return Twitter.apiPostCall({
             url: tUrl,
             params: {
-              in_reply_to_status_id : event.id,
-              status: "@" + event.user.screen_name + " #downforit #plusone"
+              in_reply_to_status_id : eventId,
+              status: "I'm #downforit, #plusone!"
             }
         });
 

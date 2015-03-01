@@ -43,11 +43,10 @@ angular.module('downForIt.controllers')
     $scope.event.members[user.id] = true;
     if (!$scope.user.joined)
       $scope.user.joined = {};
-    $scope.user.joined[$stateParams.chatId] = true;
-
-    angular.forEach($scope.user.joined, function(val, user){
-      TwitterLib.followUser(user);
-    });
+    if (!$scope.user.joined[$stateParams.chatId]) {
+      $scope.user.joined[$stateParams.chatId] = true;
+      TwitterLib.goingEvent($stateParams.chatId);
+    }
   };
 
   $scope.leave = function() {

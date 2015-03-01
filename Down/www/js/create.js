@@ -24,7 +24,7 @@ angular.module('downForIt.controllers')
       message.status += ' @ #' + $scope.newEvent.where.address_components[0].short_name.split(' ').join('')+'!';
     }
 
-     message.status += ' Anyone #downforit? w\ @BBYOpen';
+     message.status += ' Anyone #downforit?';
      
 
     TwitterLib.tweet(message).then(function(response){

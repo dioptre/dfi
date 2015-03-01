@@ -1,6 +1,6 @@
 angular.module('downForIt.controllers')
 
-.controller('HomeCtrl', function($scope, TwitterLib, $state, $stateParams) {
+.controller('HomeCtrl', function($scope, TwitterLib, $state, $stateParams, $firebase, user) {
 
   $scope.tag = $stateParams.tag;
 
@@ -41,6 +41,17 @@ angular.module('downForIt.controllers')
     }
   ];
 
+
+
+  var ref = new Firebase("https://downforit.firebaseio.com/users/"+user.id);
+
+  var syncUser = $firebase(ref).$asObject();
+  syncUser.$bindTo($scope, "user").then(function(){
+    // BOUND, data exists!
+    if ($scope.user.tags && $scope.user.tags[$scope.tag])
+      $scope.followed = true;
+  });
+
   var query = '#down4it';
 
   if ($stateParams.tag)
@@ -59,6 +70,18 @@ angular.module('downForIt.controllers')
   };
 
   $scope.refresh();
+
+  $scope.toggleFollow = function() {
+    if (!$scope.user.tags)
+      $scope.user.tags = {};
+    if (!$scope.user.tags[$scope.tag]) {
+      $scope.followed = $scope.user.tags[$scope.tag] = true;
+    } else {
+      delete $scope.user.tags[$scope.tag];
+      $scope.followed = false;
+    }
+
+  };
 
 })
 

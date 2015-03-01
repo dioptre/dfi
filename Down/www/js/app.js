@@ -188,7 +188,11 @@ $stateProvider
     resolve: {
       event: function(TwitterLib, $stateParams) {
         return TwitterLib.verify().then(function(res){
+<<<<<<< HEAD
           // alert(JSON.stringify(res));
+=======
+          alert(JSON.stringify(res))
+>>>>>>> 59dbb431f85bdf35fe2f76ddd5594f22d1577f3a
           return TwitterLib.apiGetCall({
             url: 'https://api.twitter.com/1.1/statuses/show.json',
             data: {

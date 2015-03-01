@@ -325,10 +325,17 @@ angular.module('downForIt.services')
     attendingEvents: function (events) {
       return Twitter.verify().then(function () {      
         //tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&exclude_replies=15';
-        tUrl = 'https://api.twitter.com/1.1/statuses/lookup.json?id=' + events.join(',');
-        //alert(tUrl)
+        tUrl = 'https://api.twitter.com/1.1/statuses/lookup.json';
+        alert(encodeURIComponent(events.join(',')))
         return Twitter.apiGetCall({
-            url: tUrl
+            url: tUrl,
+            data: {
+              id: events[0]
+            }
+        }).then(function(res){
+          alert('suc'+JSON.stringify(res))
+        }, function(res){
+alert('err'+JSON.stringify(res))
         });
 
       }, function (_error) {
@@ -366,6 +373,30 @@ angular.module('downForIt.services')
     favoriteEvent: function (id) {
       return Twitter.verify().then(function () {      
         tUrl = 'https://api.twitter.com/1.1/favorites/create.json?id=' + id;
+        return Twitter.apiPostCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+    },
+    followUser: function(userid) {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/friendships/create.json?follow=true&user_id=' + id;
+        return Twitter.apiPostCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+    },
+    unfollowUser: function(userid) {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/friendships/create.json?follow=false&user_id=' + id;
         return Twitter.apiPostCall({
             url: tUrl
         });

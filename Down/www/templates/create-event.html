@@ -12,7 +12,8 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">When?</span>
-          <input type="date" ng-model="newEvent.when" placeholder="(optional)">
+          <input type="date" ng-model="newEvent.date" placeholder="(optional)">
+          <input type="time" ng-model="newEvent.time" placeholder="(optional)">
         </label>
       </div>
       <button ng-click="tweet()" class="button button-full icon-left ion-checkmark-circled button-balanced">Post Event</button>

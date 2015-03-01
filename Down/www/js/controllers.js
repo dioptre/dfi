@@ -12,7 +12,8 @@ angular.module('downForIt.controllers', [])
   $scope.settings = {
     directMessage: true,
     discover: true,
-    newEvent: true
+    newEvent: true,
+    location: 'San Francisco'
   };
 
 })

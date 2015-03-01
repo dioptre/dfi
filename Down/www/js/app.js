@@ -306,7 +306,7 @@ $stateProvider
       }
     },
     views: {
-      'tab-chats': {
+      'tab-home': {
         templateUrl: 'templates/messaging.html',
         controller: 'ChatDetailCtrl'
       }

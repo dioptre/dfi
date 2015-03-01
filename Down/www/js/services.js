@@ -151,7 +151,7 @@ angular.module('downForIt.services', [])
       return posts[postId];
     },
     update: function(postDetails) {
-      postDetails = post;
+      //postDetails = post;
       //postDetails.status = "#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01";
       
       if (postDetails.tag && postDetails.tag.length && postDetails.tag.length > 0)
@@ -162,7 +162,7 @@ angular.module('downForIt.services', [])
       if (postDetails.place && postDetails.place.length && postDetails.place.length > 0)
         postDetails.status += ' @ #' + postDetails.place.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\W+/g, "");
 
-      postDetails.status += "! Who's #down4it?";
+      postDetails.status += "! Who's #downforit?";
 
       if (postDetails.ppl && postDetails.ppl > 0)
         postDetails.status += " #" + postDetails.ppl + "ppl";

@@ -15,6 +15,10 @@ angular.module('downForIt.controllers')
     }
   });
 
+  var chatSync = sync.child('chatroom').$asArray();
+
+
+
   var options = {
     url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
     data: {

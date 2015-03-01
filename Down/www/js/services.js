@@ -100,7 +100,7 @@ angular.module('downForIt.services', [])
   }
 })
 
-.factory('Posts', function() {
+.factory('Posts', function(TwitterLib) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -131,6 +131,16 @@ angular.module('downForIt.services', [])
     face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
   }];
 
+  //#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01
+  var post = {
+    lat: 37.7821120598956,
+    long: -122.400612831116,
+    tags: ['rock climbing'],
+    tag: 'rock climbing',
+    starts: new Date(),
+    place: 'yosemite',
+    ppl: 5
+  }
 
   return {
     all: function() {
@@ -139,6 +149,54 @@ angular.module('downForIt.services', [])
     get: function(postId) {
       // Simple index lookup
       return posts[postId];
+    },
+    update: function(postDetails) {
+      postDetails = post;
+      //postDetails.status = "#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01";
+      
+      if (postDetails.tag && postDetails.tag.length && postDetails.tag.length > 0)
+        postDetails.status = '#' + postDetails.tag.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\W+/g, "");
+      else
+        postDetails.status = '#hangOut';
+
+      if (postDetails.place && postDetails.place.length && postDetails.place.length > 0)
+        postDetails.status += ' @ #' + postDetails.place.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\W+/g, "");
+
+      postDetails.status += "! Who's #down4it?";
+
+      if (postDetails.ppl && postDetails.ppl > 0)
+        postDetails.status += " #" + postDetails.ppl + "ppl";
+
+      var startTime = new Date();
+      var startMeridian= 'pm';
+      if (postDetails.starts)
+        startTime = postDetails.starts;
+      else 
+        postDetails.status += " #now";
+      var starts = startTime.getHours();
+      if (starts < 12 || starts == 24)
+        startMeridian = 'am';
+      starts = starts % 12;
+      if (starts === 0)
+        starts  = 12;
+
+      postDetails.status += " #" + starts + startMeridian;
+
+      postDetails.status += " #y" + startTime.getFullYear() + "m" + startTime.getMonth() + 1 + "d" + startTime.getDate(); 
+
+      var tweet = {
+          'status': postDetails.status,
+          'lat': postDetails.lat,
+          'lng': postDetails.lng,
+          'display_coordinates': true,
+          'place_id': postDetails.place_id
+      };
+
+      TwitterLib.tweet(tweet).then(function (_data) {
+        alert("tweet success" + JSON.stringify(_data));
+      }, function (_error) {
+        alert("tweet error" + JSON.stringify(_error));
+      })
     }
   }
 

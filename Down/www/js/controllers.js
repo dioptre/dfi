@@ -53,7 +53,7 @@ angular.module('downForIt.controllers', [])
   });
 
   $scope.tweet = function() {
-    TwitterLib.tweet($scope.message.text).then(function (_data) {
+    TwitterLib.tweet({status : $scope.message.text}).then(function (_data) {
       alert("tweet success" + JSON.stringify(_data));
     }, function (_error) {
       alert("tweet error" + JSON.stringify(_error));

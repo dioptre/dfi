@@ -15,29 +15,30 @@
         <p>
           <strong>@{{tweet.user.screen_name}}</strong>
         </p>
-        <p>{{tweet.created_at | date : 'medium'}}</p>
+        <p>{{tweet.created_at | ngdate | date : 'medium'}}</p>
         <p>
           <small ng-click="$event.stopPropagation()">
             <a ng-repeat-start="tag in tweet.entities.hashtags | tags" ui-sref="tab.home-tag({tag:tag})">#{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
           </small>
         </p>
       </div>
-        <h4><i class="icon ion-ios-location-outline padding"></i> {{tweet.text}}</h4>
-        
-
-      
+      <div class="item item-body">
+        <h2>
+          <i class="icon ion-ios-location-outline padding"></i>
+          {{tweet.text}}
+        </h2>
+      </div>
       <div class="item item-body" ng-show="debug">
         <pre>{{tweet|json}}</pre>
       </div>
       <div class="item item-image" ng-if="expanded&&tweet.coordinates.coordinates[1]">
-        <h3>{{tweet.place.full_name}}</h3>
         <map zoom="16" lat="tweet.coordinates.coordinates[1]" long="tweet.coordinates.coordinates[0]"></map>
       </div>
 
-      <div class="item tabs tabs-secondary" ng-click="$event.stopPropagation()">
+      <div class="item tabs tabs-secondary tabs-icon-left" ng-click="$event.stopPropagation()">
         <a class="tab-item" ui-sref="tab.chat-detail({chatId:tweet.id})">
-          <i class="icon ion-ios-chatbubble" ng-click="newMessage()"></i>
-
+          <i class="icon ion-ios-chatboxes"></i>
+          I'm Down
         </a>
       </div>
     </div>

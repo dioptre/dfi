@@ -20,7 +20,7 @@
             <a ng-repeat-start="tag in tweet.entities.hashtags | tags" href="#/">{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
           </small>
         </p>
-        <button class="button button-icon icon ion-navicon" ng-click="menu()"></button>
+        <button class="button button-icon icon ion-navicon" ng-click="menu();$event.stopPropagation()"></button>
       </div>
       <div class="item item-body" ng-show="debug">
         <pre>{{tweet|json}}</pre>

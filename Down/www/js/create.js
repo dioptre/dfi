@@ -4,7 +4,8 @@ angular.module('downForIt.controllers')
   $scope.newEvent = {
     what: '',
     where: '',
-    when: null
+    date: new Date(),
+    time: new Date(moment().add(1, 'hour'))
   };
 //#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01
   $scope.tweet = function() {
@@ -21,20 +22,15 @@ angular.module('downForIt.controllers')
 
      message.status += 'Who\'s #downforit? @BBYOpen';
      
-     message.status += moment($scope.newEvent.date).format(' #MMMD');
-     message.status += moment($scope.newEvent.time).format(' #ha');
+     if ($scope.newEvent.date)
+       message.status += moment($scope.newEvent.date).format(' #MMMD');
+     if ($scope.newEvent.time)
+       message.status += moment($scope.newEvent.time).format(' #ha');
 
-    
-
-    $scope.error = message; alert(message);
     TwitterLib.tweet(message).then(function(response){
-      $scope.error = response;
-    }, function(error){
-      $scope.error = error;
+      alert('Event Tweeted!');
+      $state.go('tab.posts');
     });
   };
 
-  $scope.cancel = function() {
-    $scope.modal.hide();
-  };
-})
+});

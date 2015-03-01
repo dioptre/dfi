@@ -52,6 +52,7 @@ angular.module('downForIt.controllers')
       }
     }).then(function(response){
       $scope.tweets = response.statuses;
+      $scope.$broadcast('scroll.refreshComplete');
     });
   };
 

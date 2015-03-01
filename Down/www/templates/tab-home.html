@@ -7,7 +7,7 @@
   <ion-content>
     <ion-refresher on-refresh="refresh()"></ion-refresher>
     <!-- <a ng-click="debug=!debug">Toggle Debug Data</a> -->
-    <div class="padding" ng-if="tag" style="background:no-repeat center url(https://farm{{banner.farm}}.staticflickr.com/{{banner.server}}/{{banner.id}}_{{banner.secret}}.jpg);background-size:cover;min-height: 300px;">
+    <div class="padding" ng-if="tag" style="background:no-repeat center url(https://farm{{banner.farm}}.staticflickr.com/{{banner.server}}/{{banner.id}}_{{banner.secret}}.jpg);background-size:cover;padding: 100px 20px;">
       <button class="button button-full button-light" ng-class="followed&&'button-energized'" ng-click="toggleFollow()">Follow #{{tag}} <i class="icon" ng-class="{'ion-ios7-star':followed,'ion-ios7-star-outline':!followed}"></i></button>
     </div>
     <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">

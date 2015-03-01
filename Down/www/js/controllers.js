@@ -1,13 +1,14 @@
 angular.module('downForIt.controllers', [])
 
-.controller('HomeCtrl', function($scope, Chats, $ionicActionSheet, Api) {
-  $scope.chats = Chats.all();
+.controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet) {
 
-
-  Api.get('search/tweets').then(function(response){
+  TwitterLib.apiGetCall({
+    url: 'https://api.twitter.com/1.1/statuses/user_timeline.json',
+    data: {
+      q: '#down4it'
+    }
+  }).then(function(response){
     $scope.tweets = response;
-  }, function(error){
-    $scope.error = error;
   });
 
   // Triggered on a button click, or some other target

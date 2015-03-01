@@ -219,7 +219,7 @@ angular.module('downForIt.services')
       return deferred.promise;
     },
     //get my events
-    myEvents: function (_message) {
+    myEvents: function (user) {
       return Twitter.verify().then(function () {
         // alert("in tweet verified success");
 
@@ -227,7 +227,7 @@ angular.module('downForIt.services')
 
         return Twitter.apiGetCall({
             url: tUrl,
-            params: { q : "#downforit from:@andrewgrosser"}
+            params: { q : "#downforit " + ((user.screen_name) ? "" : "from:@" + user.screen_name) }
         });
 
       }, function (_error) {

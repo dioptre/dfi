@@ -43,6 +43,13 @@ $stateProvider
   .state('tab', {
     url: "/tab",
     abstract: true,
+    resolve:{
+      user: function(TwitterLib){
+        return TwitterLib.apiGetCall({
+          url: 'https://api.twitter.com/1.1/account/verify_credentials.json'
+        })
+      }
+    },
     // parent: 'authenticated',
     templateUrl: "templates/tabs.html"
   })

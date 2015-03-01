@@ -218,6 +218,23 @@ angular.module('downForIt.services')
       );
       return deferred.promise;
     },
+    //get my events
+    myEvents: function (user) {
+      return Twitter.verify().then(function () {
+        // alert("in tweet verified success");
+
+        tUrl = 'https://api.twitter.com/1.1/search/tweets.json';
+
+        return Twitter.apiGetCall({
+            url: tUrl,
+            params: { q : "#downforit " + ((user.screen_name) ? "" : "from:@" + user.screen_name) }
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          // alert("in tweet " + _error.text);
+      });
+    },
     //this will verify the user and send a tweet
     //@param _message
     tweet: function (_message) {

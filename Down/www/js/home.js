@@ -68,6 +68,8 @@ angular.module('downForIt.controllers')
   else
     query = query.join(' OR ');
 
+  query += ' -#plusone';
+
   $scope.refresh = function() {
     TwitterLib.apiGetCall({
       url: 'https://api.twitter.com/1.1/search/tweets.json',

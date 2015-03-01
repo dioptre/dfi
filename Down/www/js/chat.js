@@ -41,6 +41,7 @@ angular.module('downForIt.controllers')
     $scope.event.members[user.id] = true;
     if (!$scope.user.joined)
       $scope.user.joined = {};
+    alert($scope.user.joined[$scope.event.id]);
     $scope.user.joined[$scope.event.id] = true;
   };
 

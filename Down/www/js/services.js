@@ -131,7 +131,6 @@ angular.module('downForIt.services', [])
     face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
   }];
 
-  //#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01
   var post = {
     lat: 37.7821120598956,
     long: -122.400612831116,
@@ -152,7 +151,6 @@ angular.module('downForIt.services', [])
     },
     update: function(postDetails) {
       //postDetails = post;
-      //postDetails.status = "#camping @ #yosemite! Who's #down4it? #5ppl #12pm #y2015m03d01";
       
       if (postDetails.tag && postDetails.tag.length && postDetails.tag.length > 0)
         postDetails.status = '#' + postDetails.tag.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\W+/g, "");

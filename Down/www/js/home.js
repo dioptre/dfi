@@ -26,6 +26,9 @@ angular.module('downForIt.controllers')
           {
             text: 'down4it'
           },
+          {
+            text: 'downforit'
+          },
           { 
             text: 'hacking'
           },
@@ -58,10 +61,12 @@ angular.module('downForIt.controllers')
       $scope.followed = true;
   });
 
-  var query = '#down4it';
+  var query = ['#down4it','#downforit'];
 
   if ($stateParams.tag)
-    query += ' #' + $stateParams.tag;
+    query = query.join(' #' + $stateParams.tag+' OR ');
+  else
+    query = query.join(' OR ');
 
   $scope.refresh = function() {
     TwitterLib.apiGetCall({
@@ -95,7 +100,7 @@ angular.module('downForIt.controllers')
   return function(items){
     var results = [];
     items.forEach(function(item){
-      if (item.text != 'down4it')
+      if (item.text != 'down4it' || item.text != 'downforit')
         results.push(item.text);
     });
     return results;

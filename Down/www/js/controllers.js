@@ -16,11 +16,19 @@ angular.module('downForIt.controllers', [])
     },
     attendingEvents : function (tags) {
       
+<<<<<<< HEAD
       TwitterLib.attendingEvents(tags, user.screen_name).then(function (arg) {
 
         var theirs = Enumerable.From(arg).Join(tags,"$.in_reply_to_status_id_str", "", "outer,inner=>outer");
         var mine = Enumerable.From(arg).Join([user.screen_name], "$.screen_name", "", "outer,inner=>outer").Where("$.text.match(/#downforit/ig)");
         $scope.data = theirs.Union(mine, "$.id").ToArray();
+=======
+      TwitterLib.attendingEvents(tags).then(function (arg) {
+        $scope.data = arg;
+        
+        $scope.$broadcast('scroll.refreshComplete');
+        alert(JSON.stringify(arg))
+>>>>>>> a46bff681604ef58a05dfa51022f464493224721
       }, function(error){
         //alert(JSON.stringify(error))
       });
@@ -145,6 +153,7 @@ angular.module('downForIt.controllers', [])
             TwitterLib.upcomingEvents({lat:37.775 , long: -122.418333333333}).then(function (arg) {
               //alert(JSON.stringify(arg))
               $scope.data = arg;
+              $scope.$broadcast('scroll.refreshComplete');
             }, function(error){
               //alert(JSON.stringify(error))
             });
@@ -185,7 +194,6 @@ angular.module('downForIt.controllers', [])
         //alert(JSON.stringify(error))
       });
     },
-
 
   }
     eventMethods.actionsEvents();

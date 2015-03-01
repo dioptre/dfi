@@ -6,7 +6,7 @@
 
   <ion-content class="padding">
     <!-- <h3><a href="#/login">Login</a></h3> -->
-    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <ion-refresher on-refresh="refresh()"></ion-refresher>
     <!-- <a ng-click="debug=!debug">Toggle Debug Data</a> -->
     <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">
       <div class="item item-avatar item-button-right">
@@ -17,8 +17,8 @@
         </p>
         <p>{{tweet.created_at | date : 'medium'}}</p>
         <p>
-          <small>
-            <a ng-repeat-start="tag in tweet.entities.hashtags | tags" href="#/">{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
+          <small ng-click="$event.stopPropagation()">
+            <a ng-repeat-start="tag in tweet.entities.hashtags | tags" ui-sref="tab.home-tag({tag:tag})">#{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
           </small>
         </p>
       </div>
@@ -34,7 +34,7 @@
         <map zoom="16" lat="tweet.coordinates.coordinates[1]" long="tweet.coordinates.coordinates[0]"></map>
       </div>
 
-      <div class="item tabs tabs-secondary">
+      <div class="item tabs tabs-secondary" ng-click="$event.stopPropagation()">
         <a class="tab-item" ui-sref="tab.chat-detail({chatId:tweet.id})">
           <i class="icon ion-ios-chatbubble" ng-click="newMessage()"></i>
 

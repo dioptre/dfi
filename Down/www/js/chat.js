@@ -2,6 +2,8 @@ angular.module('downForIt.controllers')
 
 .controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase, user, utils, event) {
 
+
+  alert('newid' + $stateParams.chatId)
   var ref = new Firebase("https://downforit.firebaseio.com/");
   var eventRef = ref.child('events/'+$stateParams.chatId);
   var userRef = ref.child('users/'+user.id);
@@ -41,7 +43,7 @@ angular.module('downForIt.controllers')
     $scope.event.members[user.id] = true;
     if (!$scope.user.joined)
       $scope.user.joined = {};
-    $scope.user.joined[event.id] = true;
+    $scope.user.joined[$stateParams.chatId] = true;
   };
 
   $scope.leave = function() {
@@ -53,7 +55,7 @@ angular.module('downForIt.controllers')
     if (!$scope.user.joined)
       $scope.user.joined = {};
     else
-      delete $scope.user.joined[event.id];
+      delete $scope.user.joined[$stateParams.chatId];
   };
 
   $scope.calendar = function() {

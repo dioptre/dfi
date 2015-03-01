@@ -1,6 +1,6 @@
 angular.module('downForIt.controllers')
 
-.controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet, $state) {
+.controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet, $state, $stateParams) {
 
   $scope.tweets = [
     {
@@ -39,14 +39,23 @@ angular.module('downForIt.controllers')
     }
   ];
 
-  TwitterLib.apiGetCall({
-    url: 'https://api.twitter.com/1.1/search/tweets.json',
-    data: {
-      q: '#down4it'
-    }
-  }).then(function(response){
-    $scope.tweets = response.statuses;
-  });
+  var query = '#down4it';
+
+  if ($stateParams.tag)
+    query += ' #' + $stateParams.tag;
+
+  $scope.refresh = function() {
+    TwitterLib.apiGetCall({
+      url: 'https://api.twitter.com/1.1/search/tweets.json',
+      data: {
+        q: query
+      }
+    }).then(function(response){
+      $scope.tweets = response.statuses;
+    });
+  };
+
+  $scope.refresh();
 
   $scope.menu = function() {
    // Show the action sheet
@@ -73,7 +82,7 @@ angular.module('downForIt.controllers')
     var results = [];
     items.forEach(function(item){
       if (item.text != 'down4it')
-        results.push('#'+item.text);
+        results.push(item.text);
     });
     return results;
   };

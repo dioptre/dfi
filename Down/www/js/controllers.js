@@ -1,8 +1,18 @@
 angular.module('downForIt.controllers', [])
 
-.controller('FriendsCtrl', function($scope, Friends, user, TwitterLib) {
+.controller('FriendsCtrl', function($scope, Friends, user, $firebase, TwitterLib) {
   $scope.friends = Friends.all();
   //alert(JSON.stringify(tags))
+  var ref = new Firebase("https://downforit.firebaseio.com/users/"+user.id);
+
+  var syncUser = $firebase(ref).$asObject();
+  syncUser.$bindTo($scope, "user").then(function(){
+    // BOUND, data exists!
+  });
+
+  var tags = null;
+  if ($scope.user && $scope.user.joined)
+    tags = Object.key($scope.user.joined); // tags == ['sailing', 'hiking']
   var eventMethods = {
     filterTweets : function(sources) {
 

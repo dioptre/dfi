@@ -34,10 +34,13 @@ angular.module('downForIt.controllers', [])
 })
 
 .controller('ChatsCtrl', function($scope, Chats, TwitterLib) {
+  //TODO : We need to import that names and start a message and message id to start
+  //a group conversation
   $scope.chats = Chats.all();
   $scope.message = {
     text: ''
   };
+
   var options = {
     url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
     data: {
@@ -45,6 +48,7 @@ angular.module('downForIt.controllers', [])
       'count': "25"
     }
   };
+  
   TwitterLib.apiGetCall(options).then(function (_data) {
     // alert("doStatus success");
     $scope.items = _data;

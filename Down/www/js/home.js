@@ -100,7 +100,7 @@ angular.module('downForIt.controllers')
   return function(items){
     var results = [];
     items.forEach(function(item){
-      if (item.text != 'down4it' || item.text != 'downforit')
+      if (_.contains(['downforit', 'down4it'], item.text))
         results.push(item.text);
     });
     return results;

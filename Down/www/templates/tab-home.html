@@ -11,17 +11,21 @@
     <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">
       <div class="item item-avatar item-button-right">
         <img ng-src="{{tweet.user.profile_image_url}}">
-        <h2><i class="icon ion-ios-location-outline"></i> {{tweet.text}}</h2>
+        <button class="button button-icon icon ion-navicon" ng-click="menu();$event.stopPropagation()"></button>
         <p>
-          {{tweet.user.screen_name}} @ {{tweet.created_at | date : 'short'}}
+          <strong>{{tweet.user.screen_name}}</strong>
         </p>
+        <p>@ {{tweet.created_at | date : 'medium'}}</p>
         <p>
           <small>
             <a ng-repeat-start="tag in tweet.entities.hashtags | tags" href="#/">{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
           </small>
         </p>
-        <button class="button button-icon icon ion-navicon" ng-click="menu();$event.stopPropagation()"></button>
       </div>
+        <h3><i class="icon ion-ios-location-outline padding"></i> {{tweet.text}}</h3>
+        
+
+      
       <div class="item item-body" ng-show="debug">
         <pre>{{tweet|json}}</pre>
       </div>
@@ -29,14 +33,9 @@
         <h3>{{tweet.place.full_name}}</h3>
         <map zoom="16" lat="tweet.coordinates.coordinates[1]" long="tweet.coordinates.coordinates[0]"></map>
       </div>
-      <div class="item tabs tabs-secondary tabs-icon-left">
+      <div class="item tabs tabs-secondary">
         <a class="tab-item" href="#">
           <i class="icon ion-chatbox" ng-click="newMessage()"></i>
-          Message
-        </a>
-        <a class="tab-item" href="">
-          <i class="icon ion-thumbsup" ng-click="favorite()"></i>
-          Favorite
         </a>
       </div>
     </div>

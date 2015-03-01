@@ -9,13 +9,17 @@
     <ion-refresher on-refresh="refresh()"></ion-refresher>
     <!-- <a ng-click="debug=!debug">Toggle Debug Data</a> -->
     <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">
-      <div class="item item-avatar">
+      <div class="item item-avatar item-button-right">
         <img ng-src="{{tweet.user.profile_image_url}}">
-        <button class="button button-icon icon ion-navicon" ng-click="menu();$event.stopPropagation()"></button>
         <p>
           <strong>@{{tweet.user.screen_name}}</strong>
         </p>
         <p>{{tweet.created_at | ngdate | date : 'medium'}}</p>
+        <p>
+          <small ng-click="$event.stopPropagation()">
+            <a ng-repeat-start="tag in tweet.entities.hashtags | tags" ui-sref="tab.home-tag({tag:tag})">#{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
+          </small>
+        </p>
       </div>
       <div class="item item-body">
         <h2>

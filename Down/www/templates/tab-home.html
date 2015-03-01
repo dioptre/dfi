@@ -5,7 +5,7 @@
   </ion-nav-buttons>
 
   <ion-content class="padding">
-    <a href="#/login">Login</a>
+    <h1><a href="#/login">Login</a></h1>
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
     <pre>{{tweets||error|json}}</pre>
     <ion-list>
@@ -38,6 +38,5 @@
         </a>
       </div>
     </div>
-    <a href="#/logout">Logout</a>
   </ion-content>
 </ion-view>

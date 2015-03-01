@@ -2,6 +2,8 @@ angular.module('downForIt.controllers')
 
 .controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet, $state, $stateParams) {
 
+  $scope.tag = $stateParams.tag;
+
   $scope.tweets = [
     {
       id: 571882561464508400,

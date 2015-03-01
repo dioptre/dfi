@@ -272,6 +272,42 @@ $stateProvider
     }
   })
 
+  .state('tab.location', {
+    url: '/account/location',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/location.html'
+      }
+    }
+  })
+
+  .state('tab.radius', {
+    url: '/account/radius',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/radius.html'
+      }
+    }
+  })
+
+  .state('tab.age', {
+    url: '/account/age',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/age.html'
+      }
+    }
+  })
+
+  .state('tab.alert-frequency', {
+    url: '/account/alert-frequency',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/alert-frequency.html'
+      }
+    }
+  })
+
   .state('authenticated', {
     abstract: true,
     template: '<ui-view />',

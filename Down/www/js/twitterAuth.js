@@ -247,6 +247,25 @@ angular.module('downForIt.services')
       });
 
     },
+    upcomingEvents: function (filter) {
+      return Twitter.verify().then(function () {      
+        var geo = '';
+        var today = moment(new Date()).format('#MMMD');
+        if (false && filter.lat && filter.long)
+          geo = 'geocode=' + filter.lat + ',' + filter.long + ',20mi&';
+        tUrl = 'https://api.twitter.com/1.1/search/tweets.json?' + geo +'q=';
+        tUrl += encodeURIComponent(today);
+        alert(tUrl)
+        return Twitter.apiGetCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+
+    },
     allEvents: function () {
       return Twitter.verify().then(function () {      
         tUrl = 'https://api.twitter.com/1.1/search/tweets.json?q=';

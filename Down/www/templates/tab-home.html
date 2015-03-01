@@ -5,17 +5,17 @@
   </ion-nav-buttons>
 
   <ion-content class="padding">
-    <h1><a href="#/login">Login</a></h1>
+    <!-- <h3><a href="#/login">Login</a></h3> -->
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
-    <a ng-click="debug=!debug">Toggle Debug Data</a>
+    <!-- <a ng-click="debug=!debug">Toggle Debug Data</a> -->
     <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">
       <div class="item item-avatar item-button-right">
         <img ng-src="{{tweet.user.profile_image_url}}">
         <button class="button button-icon icon ion-navicon" ng-click="menu();$event.stopPropagation()"></button>
         <p>
-          <strong>{{tweet.user.screen_name}}</strong>
+          <strong>@{{tweet.user.screen_name}}</strong>
         </p>
-        <p>@ {{tweet.created_at | date : 'medium'}}</p>
+        <p>{{tweet.created_at | date : 'medium'}}</p>
         <p>
           <small>
             <a ng-repeat-start="tag in tweet.entities.hashtags | tags" href="#/">{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>

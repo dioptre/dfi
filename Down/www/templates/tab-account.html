@@ -3,29 +3,24 @@
     <ion-list>
 
 
-      <ion-item class="item item-icon-right" ng-click="login()">
-      Deactivate Account with DownForIt
-      <i class="icon ion-twitter icon-accessory"></i>
-      </ion-item>
+      <div class="item item-divider text-center">Preferences</div>
 
-      <div class="item item-divider">Preferences</div>
-
-      <ion-item class="item item-icon-right" href='#'>
+      <ion-item class="item item-icon-right" ng-click="location()">
       Location
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#'>
+      <ion-item class="item item-icon-right" href='#' ng-click="radius()">
       Radius
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#'>
+      <ion-item class="item item-icon-right" href='#' ng-click="age()">
       Age
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
 
-      <ion-item class="item item-icon-right" href='#'>
+      <ion-item class="item item-icon-right" href='#' ng-click="alertFrequency()">
       Alert Frequency
       <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
@@ -40,7 +35,7 @@
         </label>
       </ion-item>
 
-      <div class="item item-divider">Alert Notification</div>
+      <div class="item item-divider text-center">Alert Notification</div>
 
       <ion-item class="item-toggle">
         Alert: Direct Message
@@ -62,7 +57,7 @@
         </label>
       </ion-item>
 
-      <div class="item item-divider">Legals</div>
+      <div class="item item-divider text-center">Legals</div>
 
       <ion-item class="item" href='#/tab/account/privacy'>
       Privacy Policy
@@ -71,6 +66,12 @@
       <ion-item class="item" href='#/tab/account/terms'>
       Terms and Agreements
       </ion-item>
+
+      <div class="item item-divider text-center">Warning</div>
+
+      <button class="button button-full button-assertive" ng-click="deactivate()">
+        Deactivate Account with DownForIt
+      </button>
 
     </ion-list>
 

@@ -1,6 +1,6 @@
-<ion-view view-title="New Message">
+<ion-view view-title="Event Chat">
     <ion-content>
-
+        <h5 class="text-center">{{(event.members | count) || 1 }} Member(s)</h5>
         <ion-list>
 			<div ng-repeat="message in messages" class='padding' ng-class="{'onto-right':$odd,'onto-left':$even}">
 	            <img ng-src="{{message.sender.profile_image_url}}" /> <strong>{{message.sender.screen_name}}  </strong>

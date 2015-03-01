@@ -2,6 +2,42 @@ angular.module('downForIt.controllers')
 
 .controller('HomeCtrl', function($scope, TwitterLib, $ionicActionSheet) {
 
+  $scope.tweets = [
+    {
+      'created_at': 'Sun Mar 01 02:26:30 +0000 2015',
+      'text': '#down4it #hacking @ #fortmason',
+      user: {
+        screen_name: 'ProLoser_Dean',
+        entities: {
+          profile_image_url: 'http://pbs.twimg.com/profile_images/525393982239432704/qV5ky-kB_normal.jpeg'
+        }
+      },
+      entities: {
+        hashtags: [
+          {
+            text: 'down4it'
+          },
+          { 
+            text: 'hacking'
+          },
+          {
+            text: 'fortmason'
+          }
+        ],
+      },
+      coordinates: {
+        coordinates: [
+          -122.43,
+          37.8
+        ]
+      },
+      place: {
+        name: 'San Francisco',
+        full_name: 'San Francisco, CA'
+      }
+    }
+  ];
+
   TwitterLib.apiGetCall({
     url: 'https://api.twitter.com/1.1/search/tweets.json',
     data: {
@@ -34,13 +70,13 @@ angular.module('downForIt.controllers')
 })
 
 .filter('tags', function(){
-  return function(items, joinString){
+  return function(items){
     var results = [];
     items.forEach(function(item){
-      results.push('#'+item.text);
+      if (item.text != 'down4it')
+        results.push('#'+item.text);
     });
-    joinString = joinString || ', ';
-    return results.join(joinString);
+    return results;
   };
 })
 

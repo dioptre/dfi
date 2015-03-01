@@ -1,5 +1,5 @@
 angular.module('downForIt.controllers')
-.controller('CreateEventCtrl', function($scope, $cordovaGeolocation, TwitterLib, Posts){
+.controller('CreateEventCtrl', function($scope, TwitterLib, $state){
 
   $scope.newEvent = {
     what: '',

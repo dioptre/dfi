@@ -39,7 +39,7 @@ angular.module('downForIt.controllers', [])
     };
 
     if (!~message.status.toLowerCase().indexOf('#down4it')) {
-      message.status = '#down4it ' + message.status;
+      message.status = '#downforit ' + message.status;
     }
 
     if ($scope.newEvent.location) {
@@ -62,8 +62,8 @@ angular.module('downForIt.controllers', [])
 })
 
 .controller('PostsCtrl', function($scope, Posts, user) {
-    TwitterLib.MyEvents(user).then(function xx (argument) {
-      $scope.data = argument;
+    TwitterLib.myEvents(user).then(function (arg) {
+      $scope.data = arg;
     })
     $scope.posts = Posts.all();
     $scope.items = [];

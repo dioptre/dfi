@@ -138,7 +138,7 @@ angular.module('downForIt.services', [])
     tags: ['rock climbing'],
     tag: 'rock climbing',
     starts: new Date(),
-    place: 'yosemite',
+    // place_id: 'yosemite',
     ppl: 5
   }
 
@@ -187,11 +187,11 @@ angular.module('downForIt.services', [])
       var tweet = {
           'status': postDetails.status,
           'lat': postDetails.lat,
-          'lng': postDetails.lng,
-          'display_coordinates': true,
+          'long': postDetails.long,
           'place_id': postDetails.place_id
       };
 
+      alert(JSON.stringify(tweet));
       TwitterLib.tweet(tweet).then(function (_data) {
         alert("tweet success" + JSON.stringify(_data));
       }, function (_error) {

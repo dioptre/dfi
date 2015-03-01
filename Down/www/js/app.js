@@ -187,16 +187,13 @@ $stateProvider
     url: '/chats/:chatId',
     resolve: {
       event: function(TwitterLib, $stateParams) {
-        alert('id'+$stateParams.chatId)
-        return TwitterLib.apiGetCall({
-          url: 'https://api.twitter.com/1.1/statuses/show.json',
-          data: {
-            id: $stateParams.chatId
-          }
-        }).then(function(res){
-          alert('succ ' + JSON.stringify(res))
-        }, function(res){
-          alert('errro ' + JSON.stringify(res))
+        return TwitterLib.verify().then(function(){
+          return TwitterLib.apiGetCall({
+            url: 'https://api.twitter.com/1.1/statuses/show.json',
+            data: {
+              id: $stateParams.chatId
+            }
+          });
         });
       }
     },

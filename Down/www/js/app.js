@@ -72,7 +72,7 @@ $stateProvider
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
+          templateUrl: 'templates/message.html',
           controller: 'ChatDetailCtrl'
         }
       }
@@ -106,6 +106,7 @@ $stateProvider
         }
       }
     })
+
 
     .state('tab.create', {
       url: '/create',

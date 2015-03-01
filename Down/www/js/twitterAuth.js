@@ -220,13 +220,17 @@ angular.module('downForIt.services')
     },
     //this will verify the user and send a tweet
     //@param _message
-    tweet: function (_message, _media) {
+    tweet: function (_message) {
       return Twitter.verify().then(function () {
         // alert("in tweet verified success");
 
         tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
         tParams = {
-            'status': _message
+            'status': _message.status,
+            'lat': _message.lat,
+            'long': _message.lng,
+            'display_coordinates': true,
+            'place_id': _message.place_id
         };
         return Twitter.apiPostCall({
             url: tUrl,

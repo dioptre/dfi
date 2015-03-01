@@ -1,19 +1,8 @@
 angular.module('downForIt.controllers', [])
 
 .controller('FriendsCtrl', function($scope, Friends, user, $firebase, TwitterLib) {
-  $scope.friends = Friends.all();
-  //alert(JSON.stringify(tags))
-  var ref = new Firebase("https://downforit.firebaseio.com/users/"+user.id);
 
-  var syncUser = $firebase(ref).$asObject();
-  syncUser.$bindTo($scope, "user").then(function(){
-    // BOUND, data exists!
-  });
 
-  var tags = null;
-  if ($scope.user && $scope.user.joined)
-    tags = Object.key($scope.user.joined); // tags == ['sailing', 'hiking']
-  alert(tags)
   var eventMethods = {
     filterTweets : function(sources) {
 
@@ -25,21 +14,39 @@ angular.module('downForIt.controllers', [])
         //alert(JSON.stringify(error))
       });
     },
-    attendingEvents : function () {
+    attendingEvents : function (tags) {
+      
       TwitterLib.attendingEvents(tags).then(function (arg) {
         $scope.data = arg;
         
         $scope.$broadcast('scroll.refreshComplete');
-        //alert(JSON.stringify(arg))
+        alert(JSON.stringify(arg))
       }, function(error){
         //alert(JSON.stringify(error))
       });
     },
+    updateController: function() {
+      var tags = null;
+      if ($scope.user && $scope.user.joined) {
+        tags = Object.keys($scope.user.joined); // tags == ['sailing', 'hiking']  
+      }
+
+      eventMethods.attendingEvents(tags);
+    }
 
 
   }
-    eventMethods.attendingEvents();
 
+    $scope.friends = Friends.all();
+  //alert(JSON.stringify(tags))
+  var ref = new Firebase("https://downforit.firebaseio.com/users/"+user.id);
+
+  var syncUser = $firebase(ref).$asObject();
+  syncUser.$bindTo($scope, "user").then(function(){
+    // BOUND, data exists!
+    //alert(Object.keys($scope.user.joined).join(', '));
+    eventMethods.updateController();
+  });
 
 })
 
@@ -112,8 +119,8 @@ angular.module('downForIt.controllers', [])
 
   var tags = null;
   if ($scope.user && $scope.user.tags)
-    tags = Object.key($scope.user.tags); // tags == ['sailing', 'hiking']
-  //alert(JSON.stringify(tags))
+    tags = Object.keys($scope.user.tags); // tags == ['sailing', 'hiking']
+  alert(JSON.stringify(tags))
   var eventMethods = {
     filterTweets : function(sources) {
 

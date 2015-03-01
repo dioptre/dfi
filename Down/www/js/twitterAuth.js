@@ -247,6 +247,20 @@ angular.module('downForIt.services')
       });
 
     },
+    actionsEvents: function (actions) {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/search/tweets.json?q=';
+        tUrl += encodeURIComponent("#downforit #" + actions.join(' OR #'));
+        return Twitter.apiGetCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+
+    },
     upcomingEvents: function (filter) {
       return Twitter.verify().then(function () {      
         var geo = '';
@@ -266,9 +280,47 @@ angular.module('downForIt.services')
       });
 
     },
-    attendingEvents: function (filter) {
+    goingEvent: function(event) {
+       tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
+
+        return Twitter.apiPostCall({
+            url: tUrl,
+            params: {
+              in_reply_to_status_id : event.id,
+              status: "@" + event.user.screen_name + " #downforit +1"
+            }
+        });
+
+     
+    },
+    leavingEvent: function(event) {
+       tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
+
+        return Twitter.apiPostCall({
+            url: tUrl,
+            params: {
+              in_reply_to_status_id : event.id,
+              status: "@" + event.user.screen_name + " #downforit -1"
+            }
+        });
+    },
+    attendingEvent: function (id) {
       return Twitter.verify().then(function () {      
-        tUrl = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=100';
+        tUrl = 'https://api.twitter.com/1.1/statuses/show.json?id=' + id;
+        //alert(tUrl)
+        return Twitter.apiGetCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+
+    },
+    attendingEvents: function () {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=200';
         //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl

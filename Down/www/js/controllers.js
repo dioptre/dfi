@@ -112,11 +112,18 @@ angular.module('downForIt.controllers', [])
       }, function(error){
         //alert(JSON.stringify(error))
       });
-    }
+    },
+    attendingEvents : function () {
+      TwitterLib.attendingEvents().then(function (arg) {
+        $scope.data = arg;
+      }, function(error){
+        //alert(JSON.stringify(error))
+      });
+    },
 
 
   }
-    eventMethods.myEvents();
+    eventMethods.attendingEvents();
 
 
     $scope.posts = Posts.all();

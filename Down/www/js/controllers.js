@@ -38,7 +38,7 @@ angular.module('downForIt.controllers', [])
         'status': $scope.newEvent.text,
     };
 
-    if (!~message.status.toLowerCase().indexOf('#down4it')) {
+    if (!~message.status.toLowerCase().indexOf('#downforit')) {
       message.status = '#downforit ' + message.status;
     }
 
@@ -62,10 +62,11 @@ angular.module('downForIt.controllers', [])
 })
 
 .controller('PostsCtrl', function($scope, Posts, user, TwitterLib) {
-  alert('asdas');
     TwitterLib.myEvents(user).then(function (arg) {
       $scope.data = arg;
-    })
+    }, function(error){
+      //alert(JSON.stringify(error))
+    });
     $scope.posts = Posts.all();
     $scope.items = [];
 })

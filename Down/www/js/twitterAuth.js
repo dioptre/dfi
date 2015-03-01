@@ -211,7 +211,7 @@ angular.module('downForIt.services')
           deferred.resolve(JSON.parse(data.text));
           // $state.go('tab.dash');
         }, function (_error) {
-          alert("in verify reject " + _error);
+          alert("in verify reject " + JSON.stringify(_error));
           console.log("in verify reject " + _error);
           deferred.reject(JSON.parse(_error));
         }
@@ -220,21 +220,18 @@ angular.module('downForIt.services')
     },
     //get my events
     myEvents: function (user) {
-      return Twitter.verify().then(function () {
-      
-alert(user.screen_name);
-
-        tUrl = 'https://api.twitter.com/1.1/search/tweets.json';
-
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/search/tweets.json?q=';
+        tUrl += encodeURIComponent("#downforit from:" + user.screen_name);
         return Twitter.apiGetCall({
-            url: tUrl,
-            params: { q : "#downforit " + ((user.screen_name) ? "" : "from:@" + user.screen_name) }
+            url: tUrl
         });
 
       }, function (_error) {
           deferred.reject(JSON.parse(_error.text));
-          // alert("in tweet " + _error.text);
+          alert("in myEvents " + JSON.parse(_error.text));
       });
+
     },
     //this will verify the user and send a tweet
     //@param _message

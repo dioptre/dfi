@@ -13,6 +13,7 @@ angular.module('downForIt.controllers', [])
   var tags = null;
   if ($scope.user && $scope.user.joined)
     tags = Object.key($scope.user.joined); // tags == ['sailing', 'hiking']
+  alert(tags)
   var eventMethods = {
     filterTweets : function(sources) {
 
@@ -25,7 +26,7 @@ angular.module('downForIt.controllers', [])
       });
     },
     attendingEvents : function () {
-      TwitterLib.attendingEvents().then(function (arg) {
+      TwitterLib.attendingEvents(tags).then(function (arg) {
         $scope.data = arg;
         //alert(JSON.stringify(arg))
       }, function(error){

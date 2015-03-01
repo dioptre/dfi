@@ -322,9 +322,10 @@ angular.module('downForIt.services')
       });
 
     },
-    attendingEvents: function () {
+    attendingEvents: function (events) {
       return Twitter.verify().then(function () {      
-        tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&exclude_replies=15';
+        //tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&exclude_replies=15';
+        tUrl = 'https://api.twitter.com/1.1/statuses/lookup.json?id=' + events.join(',');
         //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl

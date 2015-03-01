@@ -33,20 +33,11 @@
         <h3>{{tweet.place.full_name}}</h3>
         <map zoom="16" lat="tweet.coordinates.coordinates[1]" long="tweet.coordinates.coordinates[0]"></map>
       </div>
-<<<<<<< HEAD
+
       <div class="item tabs tabs-secondary">
-        <a class="tab-item" href="#">
-          <i class="icon ion-ios-chatbubble" ng-click="newMessage()"></i>
-=======
-      <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" ui-sref="tab.chat-detail({chatId:tweet.id})">
-          <i class="icon ion-chatbox"></i>
-          Message
-        </a>
-        <a class="tab-item" ng-click="favorite()">
-          <i class="icon ion-thumbsup"></i>
-          Favorite
->>>>>>> b4e6c4e437f5ec596ad9efb05d11d196aee20a3a
+          <i class="icon ion-ios-chatbubble" ng-click="newMessage()"></i>
+
         </a>
       </div>
     </div>

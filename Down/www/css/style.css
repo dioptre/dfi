@@ -3,3 +3,28 @@ map {
     display: block;
     height: 300px;
 }
+
+.onto-right {
+	text-align: right;
+	width: 100%;
+	overflow: hidden;
+}
+
+.onto-right img {
+	float: right;
+}
+
+.onto-left {
+	width: 80%;
+	overflow: hidden;
+}
+
+.onto-left img {
+	float: left;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+}

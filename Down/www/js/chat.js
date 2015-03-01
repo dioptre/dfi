@@ -32,4 +32,13 @@ angular.module('downForIt.controllers')
 
   $scope.reset();
 
+})
+
+.filter('ngdate', function(){
+  return function(input){
+
+    if (!input) return;
+    var j = new Date(input);
+    return j.getTime();
+  };
 });

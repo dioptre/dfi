@@ -61,8 +61,10 @@ angular.module('downForIt.controllers', [])
   };
 })
 
-.controller('PostsCtrl', function($scope, Posts) {
-
+.controller('PostsCtrl', function($scope, Posts, user) {
+    TwitterLib.MyEvents(user).then(function xx (argument) {
+      $scope.data = argument;
+    })
     $scope.posts = Posts.all();
     $scope.items = [];
 })

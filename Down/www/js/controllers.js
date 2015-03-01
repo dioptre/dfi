@@ -128,7 +128,7 @@ angular.module('downForIt.controllers', [])
   var tags = null;
   if ($scope.user && $scope.user.tags)
     tags = Object.keys($scope.user.tags); // tags == ['sailing', 'hiking']
-  alert(JSON.stringify(tags))
+  //alert(JSON.stringify(tags))
   var eventMethods = {
     filterTweets : function(sources) {
 

@@ -177,7 +177,6 @@ angular.module('downForIt.controllers', [])
       });
     },
 
-
   }
     eventMethods.actionsEvents();
 

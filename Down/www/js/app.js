@@ -187,7 +187,8 @@ $stateProvider
     url: '/chats/:chatId',
     resolve: {
       event: function(TwitterLib, $stateParams) {
-        return TwitterLib.verify().then(function(){
+        return TwitterLib.verify().then(function(res){
+          // alert(JSON.stringify(res));
           return TwitterLib.apiGetCall({
             url: 'https://api.twitter.com/1.1/statuses/show.json',
             data: {

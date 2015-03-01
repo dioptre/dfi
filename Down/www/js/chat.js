@@ -60,9 +60,9 @@ angular.module('downForIt.controllers')
 
   $scope.calendar = function() {
     utils.addToCalendar(event).then(function(res){
-      alert('SUCCESS ' + JSON.stringify(res))
+      // alert('SUCCESS ' + JSON.stringify(res))
     },function(res){
-      alert('ERROR ' + JSON.stringify(res))
+      // alert('ERROR ' + JSON.stringify(res))
     });
   };
 

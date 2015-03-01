@@ -20,10 +20,15 @@ angular.module('downForIt.controllers', [])
 
         var theirs = Enumerable.From(arg).Join(tags,"$.in_reply_to_status_id_str", "", "outer,inner=>outer");
         var mine = Enumerable.From(arg).Join([user.screen_name], "$.screen_name", "", "outer,inner=>outer").Where("$.text.match(/#downforit/ig)");
-        $scope.data = theirs.Union(mine, "$.id").ToArray();
+        $scope.tweets = theirs.Union(mine, "$.id").ToArray();
+
+        $scope.tweets = Enumerable.From(arg).Where("$.text.match(/#downforit/ig)").ToArray();
         // $scope.data = arg;
         // $scope.$broadcast('scroll.refreshComplete');
-        alert(JSON.stringify(arg))
+
+        alert(JSON.stringify(tags))
+        alert(JSON.stringify(arg).length)
+        alert(JSON.stringify($scope.data).length)
       }, function(error){
         //alert(JSON.stringify(error))
       });

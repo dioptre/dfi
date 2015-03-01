@@ -221,7 +221,8 @@ angular.module('downForIt.services')
     //get my events
     myEvents: function (user) {
       return Twitter.verify().then(function () {
-        // alert("in tweet verified success");
+      
+alert(user.screen_name);
 
         tUrl = 'https://api.twitter.com/1.1/search/tweets.json';
 

@@ -1,68 +1,53 @@
-<ion-view view-title="My Posts">
-   <ion-nav-buttons side="right">
+<ion-view view-title="{{tag&&'#'+tag+' '}}Events">
+  <ion-nav-buttons side="right">
     <button class="button button-icon icon ion-ios7-plus-empty" ui-sref="tab.create">
     </button>
-
   </ion-nav-buttons>
-  <ion-nav-buttons side="left">
-    <button class="button button-icon icon ion-ios-gear-outline" ng-click="editExiting()">
-    </button>
-    
-  </ion-nav-buttons>
-
 
   <ion-content>
-  <pre>{{data|json}}</pre>
-  <ion-refresher on-refresh="doRefresh()"></ion-refresher>
-    <!-- <ion-list>
-      <ion-item class="item-avatar" ng-repeat="item in items">
-        <img src=" " />
-        ##  
-        <p></p>
-      </ion-item>
-    </ion-list>
-	-->
-    <ion-list>
-      <ion-item class="item-avatar" ng-repeat="post in posts" type="item-text-wrap" href="#/tab/posts/{{post.id}}">
-        <img ng-src="{{post.face}}">
-        <h2>{{post.name}}</h2>
-
-      </ion-item>
-
-      <div class="item item-divider">Past Events</div>
-
-      <ion-item class="item-avatar" ng-repeat="post in posts" type="item-text-wrap" href="#/tab/posts/{{post.id}}">
-        <img ng-src="{{post.face}}">
-        <h2>{{post.name}}</h2> <br>
-        <div class="row">
-        
-        <div class="col-75 col-offset-10">
-          <button class="button button-block button-calm">Relist</button>
-        </div>
+    <ion-refresher on-refresh="refresh()"></ion-refresher>
+    <!-- <a ng-click="debug=!debug">Toggle Debug Data</a> -->
+    <div class="padding" ng-if="tag">
+      <button class="button button-full button-light" ng-class="followed&&'button-energized'" ng-click="toggleFollow()">Follow #{{tag}} <i class="icon" ng-class="{'ion-ios7-star':followed,'ion-ios7-star-outline':!followed}"></i></button>
+    </div>
+    <div class="list card" ng-repeat="tweet in tweets" ng-click="expanded=!expanded">
+      <div class="item item-avatar item-button-right">
+        <img ng-src="{{tweet.user.profile_image_url}}">
+        <p>
+          <strong>@{{tweet.user.screen_name}}</strong>
+        </p>
+        <p>{{tweet.created_at | ngdate | date : 'medium'}}</p>
+        <p>
+          <small ng-click="$event.stopPropagation()">
+            <a ng-repeat-start="tag in tweet.entities.hashtags | tags" ui-sref="tab.home-tag({tag:tag})">#{{tag}}</a><span ng-repeat-end ng-if="!$last">, </span>
+          </small>
+        </p>
       </div>
-    </ion-list>
+      <div class="item item-body text-center">
+        <h2>
+          <i class="icon ion-ios-location-outline padding"></i>
+          {{tweet.text}}
+        </h2>
+        <p>{{(event.members | count) || 1 }} Joined</p>
+      </div>
+      <div class="item item-body" ng-show="debug">
+        <pre>{{tweet|json}}</pre>
+      </div>
+      <div class="item item-image" ng-if="expanded&&tweet.coordinates.coordinates[1]">
+        <map zoom="16" lat="tweet.coordinates.coordinates[1]" long="tweet.coordinates.coordinates[0]"></map>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left" ng-click="$event.stopPropagation()">
+        <a class="tab-item" ui-sref="tab.chat-detail({chatId:tweet.id})">
+          <i class="icon ion-ios-chatboxes"></i>
+          I'm Down
+        </a>
+        <a class="tab-item" ng-click="share(tweet)">
+          <i class="icon ion-android-share-alt"></i>
+          Share
+        </a>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>
-
-<script id="create-events.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar class="bar-calm">
-          <h1 class="title">Add New Task</h1>
-        </ion-header-bar>
-        <ion-content>
-          <div class="list">
-            <label class="item item-input">
-              <input type="text" placeholder="task title" ng-model="newTask.title">
-            </label>
-            <label class="item item-input">
-              <textarea placeholder="task description" ng-model="newTask.description"></textarea>
-            </label>
-          </div>
-
-          <div class="row">
-            <div class="col"><button ng-click="saveTask()" class="button button-full icon-left ion-checkmark-circled button-balanced">Save Task</button></div>
-            <div class="col"><button ng-click="cancelTask()" class="button button-full icon-left ion-close-circled button-assertive">Cancel</button></div>
-          </div>
-        </ion-content>
-      </ion-modal-view>
-    </script>

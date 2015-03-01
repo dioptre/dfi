@@ -1,5 +1,6 @@
 <ion-view view-title="Friends">
   <ion-content>
+  	{{data|json}}
     <ion-list>
       <ion-item class="item-avatar" ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
         <img ng-src="{{friend.face}}">

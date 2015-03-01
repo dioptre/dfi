@@ -250,7 +250,11 @@ angular.module('downForIt.services')
     actionsEvents: function (actions) {
       return Twitter.verify().then(function () {      
         tUrl = 'https://api.twitter.com/1.1/search/tweets.json?q=';
-        tUrl += encodeURIComponent("#downforit #" + actions.join(' OR #'));
+        var tags = '';
+        if (actions && actions.length > 0)
+          tags = " #" + actions.join(' OR #');
+        tUrl += encodeURIComponent("#downforit");
+        //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl
         });
@@ -320,7 +324,7 @@ angular.module('downForIt.services')
     },
     attendingEvents: function () {
       return Twitter.verify().then(function () {      
-        tUrl = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=200';
+        tUrl = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&exclude_replies=15';
         //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl

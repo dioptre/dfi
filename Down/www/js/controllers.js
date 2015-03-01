@@ -1,7 +1,33 @@
 angular.module('downForIt.controllers', [])
 
-.controller('FriendsCtrl', function($scope, Friends) {
+.controller('FriendsCtrl', function($scope, Friends, user, TwitterLib) {
   $scope.friends = Friends.all();
+  //alert(JSON.stringify(tags))
+  var eventMethods = {
+    filterTweets : function(sources) {
+
+    },
+    shareEvent : function(id) {
+      TwitterLib.shareEvent(id).then(function (arg) {
+        
+      }, function(error){
+        //alert(JSON.stringify(error))
+      });
+    },
+    attendingEvents : function () {
+      TwitterLib.attendingEvents().then(function (arg) {
+        $scope.data = arg;
+        //alert(JSON.stringify(arg))
+      }, function(error){
+        //alert(JSON.stringify(error))
+      });
+    },
+
+
+  }
+    eventMethods.attendingEvents();
+
+
 })
 
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
@@ -62,7 +88,19 @@ angular.module('downForIt.controllers', [])
   };
 })
 
-.controller('PostsCtrl', function($scope, Posts, user, TwitterLib, $cordovaGeolocation) {
+.controller('PostsCtrl', function($scope, Posts, user, TwitterLib, $cordovaGeolocation, $firebase) {
+
+  var ref = new Firebase("https://downforit.firebaseio.com/users/"+user.id);
+
+  var syncUser = $firebase(ref).$asObject();
+  syncUser.$bindTo($scope, "user").then(function(){
+    // BOUND, data exists!
+  });
+
+  var tags = null;
+  if ($scope.user && $scope.user.tags)
+    tags = Object.key($scope.user.tags); // tags == ['sailing', 'hiking']
+  //alert(JSON.stringify(tags))
   var eventMethods = {
     filterTweets : function(sources) {
 
@@ -120,10 +158,17 @@ angular.module('downForIt.controllers', [])
         //alert(JSON.stringify(error))
       });
     },
+    actionsEvents : function () {
+      TwitterLib.actionsEvents(tags).then(function (arg) {
+        $scope.tweets = arg.statuses;
+      }, function(error){
+        //alert(JSON.stringify(error))
+      });
+    },
 
 
   }
-    eventMethods.attendingEvents();
+    eventMethods.actionsEvents();
 
 
     $scope.posts = Posts.all();

@@ -268,12 +268,7 @@ angular.module('downForIt.services')
     },
     attendingEvents: function (filter) {
       return Twitter.verify().then(function () {      
-        var geo = '';
-        var today = moment(new Date()).format('#MMMD');
-        if (filter.lat && filter.long)
-          geo = 'geocode=' + filter.lat + ',' + filter.long + ',20mi&';
-        tUrl = 'https://api.twitter.com/1.1/search/tweets.json?' + geo +'q=';
-        tUrl += encodeURIComponent("#downforit " + today);
+        tUrl = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=100';
         //alert(tUrl)
         return Twitter.apiGetCall({
             url: tUrl
@@ -298,6 +293,30 @@ angular.module('downForIt.services')
           alert("in myEvents " + JSON.parse(_error.text));
       });
 
+    },
+    shareEvent: function (id) {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/statuses/retweet/' + id + '.json';
+        return Twitter.apiPostCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
+    },
+    favoriteEvent: function (id) {
+      return Twitter.verify().then(function () {      
+        tUrl = 'https://api.twitter.com/1.1/favorites/create.json?id=' + id;
+        return Twitter.apiPostCall({
+            url: tUrl
+        });
+
+      }, function (_error) {
+          deferred.reject(JSON.parse(_error.text));
+          alert("in myEvents " + JSON.parse(_error.text));
+      });
     },
     //this will verify the user and send a tweet
     //@param _message

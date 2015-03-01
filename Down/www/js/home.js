@@ -100,7 +100,7 @@ angular.module('downForIt.controllers')
   return function(items){
     var results = [];
     items.forEach(function(item){
-      if (_.contains(['downforit', 'down4it'], item.text))
+      if (!_.contains(['downforit', 'down4it', 'Mar2', '5am', '3am', 'Mar1', '10am', '4am', '12pm', 'FortMason', 'Ganado', 'MarinCounty', '3pm', 'CoitTower'], item.text))
         results.push(item.text);
     });
     return results;

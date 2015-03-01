@@ -72,7 +72,7 @@ $stateProvider
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/message.html',
+          templateUrl: 'templates/messaging.html',
           controller: 'ChatDetailCtrl'
         }
       }

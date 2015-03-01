@@ -28,6 +28,8 @@ angular.module('downForIt.controllers', [])
     attendingEvents : function () {
       TwitterLib.attendingEvents(tags).then(function (arg) {
         $scope.data = arg;
+        
+        $scope.$broadcast('scroll.refreshComplete');
         //alert(JSON.stringify(arg))
       }, function(error){
         //alert(JSON.stringify(error))
@@ -136,6 +138,7 @@ angular.module('downForIt.controllers', [])
             TwitterLib.upcomingEvents({lat:37.775 , long: -122.418333333333}).then(function (arg) {
               //alert(JSON.stringify(arg))
               $scope.data = arg;
+              $scope.$broadcast('scroll.refreshComplete');
             }, function(error){
               //alert(JSON.stringify(error))
             });

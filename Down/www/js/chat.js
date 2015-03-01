@@ -8,7 +8,7 @@ angular.module('downForIt.controllers')
   var eventRef = ref.child('events/'+$stateParams.chatId);
   var userRef = ref.child('users/'+user.id);
 
-  $scope.eventInfo = event;
+  $scope.tweet = event;
 
   var syncEvent = $firebase(eventRef).$asObject();
   syncEvent.$bindTo($scope, "event").then(function(){

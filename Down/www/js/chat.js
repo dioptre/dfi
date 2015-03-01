@@ -1,12 +1,19 @@
 angular.module('downForIt.controllers')
 
-.controller('ChatsCtrl', function($scope, Chats, TwitterLib) {
-  //TODO : We need to import that names and start a message and message id to start
-  //a group conversation
-  $scope.chats = Chats.all();
-  $scope.message = {
-    text: ''
-  };
+.controller('ChatDetailCtrl', function($scope, Chats, TwitterLib, $stateParams, $firebase) {
+  var ref = new Firebase("https://downforit.firebaseio.com/events");
+  // create an AngularFire reference to the data
+  var sync = $firebase(ref.child($stateParams.chatId));
+  // download the data into a local object
+  var syncObject = sync.$asObject();
+
+  syncObject.$bindTo($scope, "event").then(function(){
+    // BOUND, data exists!
+    // $scope.chats = {};
+    if (!$scope.event.chatroom) {
+      $scope.event.chatroom = {};
+    }
+  });
 
   var options = {
     url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
@@ -16,26 +23,20 @@ angular.module('downForIt.controllers')
     }
   };
   
-  TwitterLib.apiGetCall(options).then(function (_data) {
-    // alert("doStatus success");
-    $scope.items = _data;
-  }, function (_error) {
-    alert("doStatus error" + JSON.stringify(_error));
-  });
-
-  $scope.tweet = function() {
-    TwitterLib.tweet({status:$scope.message.text}).then(function (_data) {
-      alert("tweet success" + JSON.stringify(_data));
-    }, function (_error) {
-      alert("tweet error" + JSON.stringify(_error));
-    });
+  $scope.message = function() {
+    $scope.newMessage.created_at = new Date().getTime();
+    $scope.event.chatroom[new Date().getTime()] = $scope.newMessage;
+    $scope.reset();
   };
 
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  $scope.reset = function() {
+    $scope.newMessage = {
+      text: '',
+      sender: '@proloser'
+    };
   };
-})
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+
+  $scope.reset();
+
 });
